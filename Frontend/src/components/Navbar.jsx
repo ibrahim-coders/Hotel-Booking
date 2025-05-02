@@ -25,10 +25,10 @@ const Navbar = () => {
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white shadow-md py-3' : 'bg-transparent py-5'
+        isScrolled ? 'bg-white shadow-md py-3' : ''
       }`}
     >
-      <div className="relative mx-auto max-w-full px-6 lg:max-w-5xl xl:max-w-7xl 2xl:max-w-[96rem]">
+      <div className="relative mx-auto max-w-full px-6 lg:max-w-5xl xl:max-w-7xl ">
         <nav
           aria-label="main navigation"
           className="flex items-stretch justify-between font-medium text-slate-700"
@@ -43,7 +43,7 @@ const Navbar = () => {
                 isScrolled ? 'text-hotel-blue' : 'text-white'
               }`}
             >
-              Hotel-booking
+              Start Hotel
             </span>
           </Link>
 
@@ -54,7 +54,7 @@ const Navbar = () => {
             aria-expanded={isToggleOpen ? 'true' : 'false'}
             aria-label="Toggle navigation"
           >
-            <div className="absolute left-1/2 top-1/2 w-6 -translate-x-1/2 -translate-y-1/2 transform">
+            <div className="absolute left-1/2 top-1/2 w-6 -translate-x-1/2 transform">
               <span className="absolute block h-0.5 w-9/12 -translate-y-2 transform rounded-full bg-slate-900 transition-all duration-300" />
               <span className="absolute block h-0.5 w-6 transform rounded-full bg-slate-900 transition duration-300" />
               <span className="absolute block h-0.5 w-1/2 origin-top-left translate-y-2 transform rounded-full bg-slate-900 transition-all duration-300" />
@@ -65,7 +65,7 @@ const Navbar = () => {
           <ul
             role="menubar"
             aria-label="Select page"
-            className={`absolute space-x-4 left-0 top-0 z-0 h-[28.5rem] w-full justify-center overflow-hidden overflow-y-auto bg-white/90 px-8 pb-12 pt-24 font-medium transition-[opacity,visibility] duration-300 lg:visible lg:relative lg:top-0 lg:z-0 lg:flex lg:h-full lg:w-auto lg:items-stretch lg:overflow-visible lg:bg-transparent lg:px-0 lg:py-0 lg:opacity-100 ${
+            className={`absolute space-x-4 left-0 top-0 z-0 h-[28.5rem] w-full justify-center overflow-hidden overflow-y-auto px-8 pb-12 pt-20 font-medium transition-[opacity,visibility] duration-300 lg:visible lg:relative lg:top-0 lg:z-0 lg:flex lg:h-full lg:w-auto lg:items-stretch lg:overflow-visible lg:bg-transparent lg:px-0 lg:py-0 lg:opacity-100 ${
               isToggleOpen
                 ? 'visible opacity-100 backdrop-blur-sm'
                 : 'invisible opacity-0'

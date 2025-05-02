@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
-            <h3 className="font-bold text-2xl mb-4">StayNexus</h3>
+            <h3 className="font-bold text-2xl mb-4">Start Hotel</h3>
             <p className="text-gray-400 mb-6">
               Find and book your perfect accommodation worldwide. We offer the
               best prices and a seamless booking experience.
@@ -145,7 +145,7 @@ const Footer = () => {
               Get exclusive deals and travel inspiration delivered straight to
               your inbox
             </p>
-            <div className="flex space-x-2">
+            <div className="flex md:flex-col space-x-2 space-y-4">
               <input
                 type="email"
                 placeholder="Your email"
@@ -161,7 +161,8 @@ const Footer = () => {
         {/* Copyright */}
         <div className="py-4 border-t border-gray-700 text-center text-gray-400 text-sm">
           <p>
-            &copy; {new Date().getFullYear()} StayNexus. All rights reserved.
+            &copy; {new Date().getFullYear()}
+            Start Hote. All rights reserved.
           </p>
         </div>
       </div>
