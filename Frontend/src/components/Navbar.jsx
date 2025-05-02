@@ -31,7 +31,7 @@ const Navbar = () => {
       <div className="relative mx-auto max-w-full px-6 lg:max-w-5xl xl:max-w-7xl ">
         <nav
           aria-label="main navigation"
-          className="flex items-stretch justify-between font-medium text-slate-700"
+          className="flex items-stretch justify-between font-medium text-slate-700 pt-4"
         >
           {/* Brand logo */}
           <Link
@@ -68,7 +68,7 @@ const Navbar = () => {
             className={`absolute space-x-4 left-0 top-0 z-0 h-[28.5rem] w-full justify-center overflow-hidden overflow-y-auto px-8 pb-12 pt-20 font-medium transition-[opacity,visibility] duration-300 lg:visible lg:relative lg:top-0 lg:z-0 lg:flex lg:h-full lg:w-auto lg:items-stretch lg:overflow-visible lg:bg-transparent lg:px-0 lg:py-0 lg:opacity-100 ${
               isToggleOpen
                 ? 'visible opacity-100 backdrop-blur-sm'
-                : 'invisible opacity-0'
+                : 'invisible opacity-10'
             }`}
           >
             <li role="none" className="flex items-stretch px-4 py-2 lg:p-0">
