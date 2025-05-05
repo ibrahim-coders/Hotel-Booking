@@ -1,13 +1,16 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const MainLayout = () => {
+  const loaction = useLocation();
+  const noLayouts = ['/login', 'register'];
+  const isLayoutHidden = noLayouts.includes(loaction.pathname);
   return (
     <div>
-      <Navbar />
+      {!isLayoutHidden && <Navbar />}
       <Outlet />
-      <Footer />
+      {!isLayoutHidden && <Footer />}
     </div>
   );
 };

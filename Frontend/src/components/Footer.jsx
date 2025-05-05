@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
-            <h3 className="font-bold text-2xl mb-4">Start Hotel</h3>
+            <h3 className="font-bold text-2xl mb-4">StartHotel</h3>
             <p className="text-gray-400 mb-6">
               Find and book your perfect accommodation worldwide. We offer the
               best prices and a seamless booking experience.

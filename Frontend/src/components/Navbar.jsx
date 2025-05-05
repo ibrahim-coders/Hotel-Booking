@@ -43,7 +43,7 @@ const Navbar = () => {
                 isScrolled ? 'text-[#1A4D8C]' : 'text-teal-500'
               }`}
             >
-              Start Hotel
+              StartHotel
             </span>
           </Link>
 
