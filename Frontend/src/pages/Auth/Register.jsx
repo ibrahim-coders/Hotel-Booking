@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaEye, FaEyeSlash, FaUserPlus } from 'react-icons/fa6';
 import { CiHome } from 'react-icons/ci';
-
+import axios from 'axios';
 const Register = () => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
@@ -10,10 +10,25 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
 
-  const handleRegister = e => {
+  const handleRegister = async e => {
     e.preventDefault();
     // Registration logic here
-    console.log({ fullName, email, password, agreeTerms });
+    // const user = { fullName, email, password, agreeTerms };
+
+    try {
+      const response = await axios.post(
+        'http://localhost:5000/api/auth/register',
+        {
+          fullName,
+          email,
+          password,
+        }
+      );
+      alert('Registration Successful');
+      console.log(response);
+    } catch (error) {
+      alert(error.response?.data?.message || 'Registration failed');
+    }
   };
 
   return (

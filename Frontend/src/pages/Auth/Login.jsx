@@ -3,6 +3,7 @@ import { GrLogin } from 'react-icons/gr';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import axios from 'axios';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -10,10 +11,18 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
 
-  const handleLogin = e => {
+  const handleLogin = async e => {
     e.preventDefault();
-    // Your login logic here
-    console.log({ email, password, rememberMe });
+    try {
+      const res = await axios.post('http://localhost:5000/api/auth/login', {
+        email,
+        password,
+      });
+      localStorage.setItem('token', res.data.token);
+      alert('Login Successful');
+    } catch (err) {
+      alert(err.response?.data?.message || 'Login failed');
+    }
   };
 
   return (
