@@ -1,27 +1,50 @@
 import { CiHome } from 'react-icons/ci';
 import { GrLogin } from 'react-icons/gr';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import axios from 'axios';
+import useAxiosePublic from '../../hooks/useAxiosPublic';
+import toast from 'react-hot-toast';
+import useAuthStore from '../../store/authStore';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [error, setError] = useState('');
+  const axiosPublic = useAxiosePublic();
+  const navigate = useNavigate();
+  const setUser = useAuthStore(state => state.setUser);
   const handleLogin = async e => {
     e.preventDefault();
+    setEmailError('');
+    setPasswordError('');
+    setError('');
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', {
-        email,
-        password,
-      });
-      localStorage.setItem('token', res.data.token);
-      alert('Login Successful');
+      const res = await axiosPublic.post(
+        '/auth/login',
+        {
+          email,
+          password,
+        },
+        { withCredentials: true }
+      );
+      setUser(res.data?.user);
+      toast.success(res.data?.message);
+      navigate('/');
     } catch (err) {
-      alert(err.response?.data?.message || 'Login failed');
+      const message = err.response?.data?.message;
+
+      if (message === 'Email does not match') {
+        setEmailError(message);
+      } else if (message === 'Password does not match') {
+        setPasswordError(message);
+      } else {
+        setError(message || 'Something went wrong');
+      }
     }
   };
 
@@ -49,6 +72,8 @@ const Login = () => {
         </p>
 
         <form onSubmit={handleLogin} className="space-y-5">
+          {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+
           <div>
             <label htmlFor="email" className="block text-sm font-medium mb-1">
               Email
@@ -63,7 +88,7 @@ const Login = () => {
               required
             />
           </div>
-
+          {emailError && <p className="text-red-500 text-sm ">{emailError}</p>}
           <div>
             <div className="flex items-center justify-between mb-1">
               <label htmlFor="password" className="text-sm font-medium">
@@ -86,6 +111,9 @@ const Login = () => {
                 onChange={e => setPassword(e.target.value)}
                 required
               />
+              {passwordError && (
+                <p className="text-red-500 text-sm ">{passwordError}</p>
+              )}
               <button
                 type="button"
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"

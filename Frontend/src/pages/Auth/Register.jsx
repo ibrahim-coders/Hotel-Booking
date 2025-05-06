@@ -1,33 +1,44 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash, FaUserPlus } from 'react-icons/fa6';
 import { CiHome } from 'react-icons/ci';
-import axios from 'axios';
+import useAxiosePublic from '../../hooks/useAxiosPublic';
+import toast from 'react-hot-toast';
+import useAuthStore from '../../store/authStore';
 const Register = () => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
-
+  const [error, setError] = useState('');
+  const axiosPublic = useAxiosePublic();
+  const navigate = useNavigate();
+  const setUser = useAuthStore(state => state.setUser);
   const handleRegister = async e => {
     e.preventDefault();
-    // Registration logic here
-    // const user = { fullName, email, password, agreeTerms };
 
+    if (password.length < 8) {
+      setError(
+        'At least 8 characters, include a number and special character.'
+      );
+      return;
+    }
     try {
-      const response = await axios.post(
-        'http://localhost:5000/api/auth/register',
+      const response = await axiosPublic.post(
+        '/auth/register',
         {
           fullName,
           email,
           password,
-        }
+        },
+        { withCredentials: true }
       );
-      alert('Registration Successful');
-      console.log(response);
+      setUser(response.data?.user);
+      toast.success(response.data?.message || 'Registration Successful');
+      navigate('/');
     } catch (error) {
-      alert(error.response?.data?.message || 'Registration failed');
+      toast.error(error.response?.data?.message || 'Registration failed');
     }
   };
 
@@ -121,9 +132,15 @@ const Register = () => {
                 {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
               </button>
             </div>
-            <p className="text-xs text-gray-500 mt-1">
-              At least 8 characters, include a number and special character.
-            </p>
+            <div className="text-xs">
+              {error ? (
+                <p className="text-red-600">{error}</p>
+              ) : (
+                <p className="text-gray-500 mt-1">
+                  At least 8 characters, include a number and special character.
+                </p>
+              )}
+            </div>
           </div>
 
           {/* Terms Checkbox */}

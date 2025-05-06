@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { CiUser } from 'react-icons/ci';
 import { Link, NavLink } from 'react-router-dom';
+import useAuthStore from '../store/authStore';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isToggleOpen, setIsToggleOpen] = useState(false);
-
+  const user = useAuthStore(state => state.user);
+  console.log(user);
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -123,17 +125,27 @@ const Navbar = () => {
 
           {/* Sign In Button */}
           <div className="ml-auto flex items-center justify-end px-6 lg:ml-0 lg:flex-1 lg:p-0">
-            <Link
-              to="/login"
-              className={`flex items-center gap-1 rounded-full py-2 px-4 text-sm font-semibold border transition-all ${
-                isScrolled
-                  ? 'text-hotel-blue border-hotel-blue hover:bg-hotel-blue hover:text-white'
-                  : 'text-white border-blue-800 hover:bg-bule-700 '
-              }`}
-            >
-              <CiUser size={18} />
-              Sign In
-            </Link>
+            {user ? (
+              <Link to="/profile">
+                <img
+                  className="w-8 h-8 rounded-full"
+                  src="https://i.ibb.co/9km0tXxd/istockphoto-1158245278-1024x1024.jpg"
+                  alt=""
+                />
+              </Link>
+            ) : (
+              <Link
+                to="/login"
+                className={`flex items-center gap-1 rounded-full py-2 px-4 text-sm font-semibold border transition-all ${
+                  isScrolled
+                    ? 'text-hotel-blue border-hotel-blue hover:bg-hotel-blue hover:text-white'
+                    : 'text-white border-blue-800 hover:bg-bule-700 '
+                }`}
+              >
+                <CiUser size={18} />
+                Sign In
+              </Link>
+            )}
           </div>
         </nav>
       </div>
