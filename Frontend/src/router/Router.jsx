@@ -6,6 +6,7 @@ import Contact from '../pages/Contact/Contact';
 import Login from '../pages/Auth/Login';
 import ErrorPage from '../pages/Error/ErrorPages';
 import Register from '../pages/Auth/Register';
+import Profile from '../pages/Profile.jsx';
 
 const Router = () => {
   return (
@@ -15,6 +16,7 @@ const Router = () => {
           <Route index element={<Home />} />
           <Route path="about" element={<AboutPages />} />
           <Route path="contact" element={<Contact />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />

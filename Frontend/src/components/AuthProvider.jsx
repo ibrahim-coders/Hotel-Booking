@@ -15,7 +15,9 @@ const AuthProvider = () => {
         console.log('Fetched User:', res.data);
         setUser(res.data);
       } catch (err) {
-        console.error('User not authenticated', err);
+        if (err.response?.status === 401) {
+          setUser(null);
+        }
       }
     };
 

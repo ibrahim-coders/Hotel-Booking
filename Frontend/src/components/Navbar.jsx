@@ -12,7 +12,8 @@ const Navbar = () => {
   const user = useAuthStore(state => state.user);
   const [isOpen, setOpen] = useState(false);
   const axiosPublic = useAxiosePublic();
-  console.log(user);
+  const setUser = useAuthStore(state => state.setUser);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -40,6 +41,7 @@ const Navbar = () => {
           withCredentials: true,
         }
       );
+      setUser(null);
       toast.success(res.data?.message);
       console.log(res.data?.message);
     } catch (error) {
@@ -146,63 +148,67 @@ const Navbar = () => {
             </li>
           </ul>
 
-          {/* Sign In Button */}
+          {/* Sign In Button or User Avatar with Dropdown */}
           <div className="ml-auto flex items-center justify-end px-6 lg:ml-0 lg:flex-1 lg:p-0">
             {user ? (
-              <div className="flex flex-col justify-center items-center gap-1 text-sm">
-                <div className="relative inline-flex">
-                  <span className="inline-flex divide-x divide-gray-300 overflow-hidden rounded border border-gray-300 shadow-sm bg-[#1A4D8C]">
+              <div className="flex flex-col justify-center items-center gap-1 text-sm relative">
+                {/* Avatar + Dropdown Toggle Button */}
+                <div className="inline-flex items-center divide-x divide-gray-300 rounded border border-gray-300 bg-[#1A4D8C] shadow-sm overflow-hidden">
+                  {/* Avatar with Online Badge */}
+                  <Link to="/profile" className="relative p-1.5">
                     <img
-                      className="w-10 h-10 object-cover  rounded-full cursor-pointer"
+                      className="w-10 h-10 rounded-full"
                       src={
                         user.photoURL ||
                         'https://i.ibb.co/9km0tXxd/istockphoto-1158245278-1024x1024.jpg'
                       }
                       alt="User"
                     />
+                    <span className="absolute top-0 left-2 w-3 h-3 bg-green-400 border-2 border-white rounded-full"></span>
+                  </Link>
+
+                  {/* Dropdown Toggle */}
+                  <button
+                    onClick={() => setOpen(!isOpen)}
+                    type="button"
+                    className="px-3 py-1.5 text-sm font-medium text-white   cursor-pointer"
+                  >
+                    <IoIosArrowDown className="size-4 " />
+                  </button>
+                </div>
+
+                {/* Dropdown Menu */}
+                {isOpen && (
+                  <div
+                    role="menu"
+                    className="absolute right-0 top-14 z-50 w-40 rounded border border-gray-300 bg-[#1A4D8C] shadow-md divide-y divide-gray-200"
+                  >
+                    <button
+                      type="button"
+                      className="w-full px-4 py-2 text-left text-sm font-medium text-white hover:bg-blue-700"
+                    >
+                      Dashboard
+                    </button>
 
                     <button
-                      onClick={() => setOpen(!isOpen)}
+                      onClick={handleLogout}
                       type="button"
-                      className="px-3 py-1.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 hover:text-gray-900 focus:relative dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-white"
-                      aria-label="Menu"
+                      className="flex items-center space-x-2 w-full px-4 py-2 text-left text-sm text-red-500 hover:bg-red-100"
                     >
-                      <IoIosArrowDown className="size-4 hover:text-gray-400 cursor-pointer" />
+                      <span>Logout</span>
+                      <CiLogout className="text-red-500 size-5" />
                     </button>
-                  </span>
-
-                  {isOpen && (
-                    <div
-                      role="menu"
-                      className="absolute end-0 top-12 z-auto w-40 divide-y divide-gray-200 overflow-hidden rounded border border-gray-300 bg-[#1A4D8C] shadow-sm "
-                    >
-                      <button
-                        type="button"
-                        className="w-full  px-3 py-2 text-left text-sm font-medium text-white transition-colors hover:bg-red-50  "
-                      >
-                        Deshboard
-                      </button>
-                      <button
-                        onClick={handleLogout}
-                        type="button"
-                        className=" flex space-x-2 w-full  px-3 py-2 text-left transition-colors hover:bg-red-50  dark:hover:bg-blue-700/20 text-xl "
-                      >
-                        <span className="text-red-700 ">Logout</span>{' '}
-                        <span className="text-red-700 ">
-                          <CiLogout className="size-6" />
-                        </span>
-                      </button>
-                    </div>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
             ) : (
+              // Sign In Link
               <Link
                 to="/login"
                 className={`flex items-center gap-1 rounded-full py-2 px-4 text-sm font-semibold border transition-all ${
                   isScrolled
                     ? 'text-hotel-blue border-hotel-blue hover:bg-hotel-blue hover:text-white'
-                    : 'text-white border-blue-800 hover:bg-bule-700 '
+                    : 'text-white border-blue-800 hover:bg-blue-700'
                 }`}
               >
                 <CiUser size={18} />
