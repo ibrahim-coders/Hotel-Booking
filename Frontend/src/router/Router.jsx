@@ -7,6 +7,7 @@ import Login from '../pages/Auth/Login';
 import ErrorPage from '../pages/Error/ErrorPages';
 import Register from '../pages/Auth/Register';
 import Profile from '../pages/Profile.jsx';
+import DashboardLayout from '../layout/DashboardLayout.jsx';
 
 const Router = () => {
   return (
@@ -18,9 +19,15 @@ const Router = () => {
           <Route path="contact" element={<Contact />} />
           <Route path="profile" element={<Profile />} />
         </Route>
+        {/* authtentication file */}
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        {/* error file */}
         <Route path="*" element={<ErrorPage />} />
+        {/* deshboard */}
+        <Route>
+          <Route path="/deshboard" element={<DashboardLayout />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

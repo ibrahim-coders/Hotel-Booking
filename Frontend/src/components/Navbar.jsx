@@ -181,19 +181,19 @@ const Navbar = () => {
                 {isOpen && (
                   <div
                     role="menu"
-                    className="absolute right-0 top-14 z-50 w-40 rounded border border-gray-300 bg-[#1A4D8C] shadow-md divide-y divide-gray-200"
+                    className="absolute right-0 top-14 z-50 w-40 rounded border border-gray-300 bg-[#1A4D8C] shadow-md divide-y divide-gray-200 "
                   >
-                    <button
-                      type="button"
-                      className="w-full px-4 py-2 text-left text-sm font-medium text-white hover:bg-blue-700"
+                    <Link
+                      to="deshboard"
+                      className="w-full inline-block px-4 py-2 text-left text-sm font-medium text-white hover:bg-blue-700"
                     >
                       Dashboard
-                    </button>
+                    </Link>
 
                     <button
                       onClick={handleLogout}
                       type="button"
-                      className="flex items-center space-x-2 w-full px-4 py-2 text-left text-sm text-red-500 hover:bg-red-100"
+                      className="flex w-full items-center space-x-2  px-4 py-2 text-left text-sm text-red-500 hover:bg-red-100 cursor-pointer"
                     >
                       <span>Logout</span>
                       <CiLogout className="text-red-500 size-5" />
