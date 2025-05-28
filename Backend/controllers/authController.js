@@ -8,19 +8,18 @@ exports.register = async (req, res) => {
     const userExists = await User.findOne({ email });
     if (userExists)
       return res.status(400).json({ message: 'User already exists' });
-    const hashedPassword = await bcrypt.hash(password, 8);
 
+    const hashedPassword = await bcrypt.hash(password, 8);
     const user = new User({ fullName, email, password: hashedPassword, role });
 
     await user.save();
-    //  JWT Token
+
     const token = jwt.sign(
       { id: user._id, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: '30d' }
     );
 
-    // Cookie
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
@@ -28,7 +27,6 @@ exports.register = async (req, res) => {
       maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 
-    //  Success response
     res.status(201).json({
       message: 'User registered successfully',
       user: {
@@ -47,24 +45,21 @@ exports.login = async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
-
     if (!user) return res.status(400).json({ message: 'Email does not match' });
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch)
       return res.status(400).json({ message: 'Password does not match' });
 
-    // JWT Token
     const token = jwt.sign(
       { id: user._id, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: '30d' }
     );
 
-    // Set token in cookie
     res.cookie('token', token, {
       httpOnly: true,
-      secure: false,
+      secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
       maxAge: 30 * 24 * 60 * 60 * 1000,
     });

@@ -4,6 +4,8 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 const cookieParser = require('cookie-parser');
 const userUpade = require('./routes/userUpdate');
+const verifyToken = require('./middleware/verifyToken');
+const getUserInfo = require('./controllers/getUserInfo');
 
 //config
 dotenv.config();
@@ -22,6 +24,7 @@ app.use(cookieParser());
 
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/users', userUpade);
+app.get('/api/auth');
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

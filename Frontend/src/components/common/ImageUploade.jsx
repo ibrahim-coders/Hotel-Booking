@@ -7,7 +7,7 @@ const ImageUploader = ({ onImageUpload }) => {
     onDrop: acceptedFiles => {
       const file = acceptedFiles[0];
       const previewUrl = URL.createObjectURL(file);
-      onImageUpload(previewUrl, file); // file পাঠাও
+      onImageUpload(previewUrl, file);
     },
   });
 
