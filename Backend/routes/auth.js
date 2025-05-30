@@ -3,18 +3,11 @@ const router = express.Router();
 const { register, login, logout } = require('../controllers/authController');
 const verifyToken = require('../middleware/verifyToken');
 const getUserInfo = require('../controllers/getUserInfo');
+const { hotels } = require('../controllers/hotelsController');
 
 router.post('/register', register);
 router.post('/login', login);
 router.post('/logout', logout);
 router.get('/userInfo', verifyToken, getUserInfo);
-// router.get('/userInfo', verifyToken, async (req, res) => {
-//   try {
-//     const user = await User.findById(req.user.id);
-//     res.json(user);
-//   } catch (error) {
-//     res.status(500).json({ message: 'Server error' });
-//   }
-// });
-
+router.post('/hotels', verifyToken, hotels);
 module.exports = router;

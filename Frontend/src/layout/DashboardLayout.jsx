@@ -1,14 +1,14 @@
-import DashboardHome from '../pages/Dashboard/DashboardHome';
+import { Outlet } from 'react-router-dom';
 import Sidebar from '../pages/Dashboard/Sidebar';
 
 const DashboardLayout = () => {
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-4 ">
       {/* sideBar */}
-      <div className="w-64  h-full">
+      <div className=" fixed top-0 left-0 z-10 h-screen pr-2 overflow-y-auto">
         <Sidebar />
       </div>
-      <DashboardHome />
+      <Outlet />
     </div>
   );
 };

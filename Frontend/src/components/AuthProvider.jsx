@@ -15,7 +15,6 @@ const AuthProvider = () => {
         if (res.data?.user) {
           setUser(res.data.user);
         }
-        console.log(res.data);
       } catch (err) {
         setUser(null);
         console.log(err.message);

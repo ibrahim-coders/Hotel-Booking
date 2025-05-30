@@ -8,6 +8,8 @@ import ErrorPage from '../pages/Error/ErrorPages';
 import Register from '../pages/Auth/Register';
 import Profile from '../pages/Profile.jsx';
 import DashboardLayout from '../layout/DashboardLayout.jsx';
+import DashboardHome from '../pages/Dashboard/DashboardHome.jsx';
+import AddHotel from '../pages/Dashboard/AddHotel.jsx';
 
 const Router = () => {
   return (
@@ -19,15 +21,19 @@ const Router = () => {
           <Route path="contact" element={<Contact />} />
           <Route path="profile" element={<Profile />} />
         </Route>
-        {/* authtentication file */}
+
+        {/* Auth routes */}
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
-        {/* error file */}
-        <Route path="*" element={<ErrorPage />} />
-        {/* deshboard */}
-        <Route>
-          <Route path="/deshboard" element={<DashboardLayout />} />
+
+        {/* Dashboard layout and nested routes */}
+        <Route path="/deshboard" element={<DashboardLayout />}>
+          <Route index element={<DashboardHome />} />
+          <Route path="add-hotel" element={<AddHotel />} />
         </Route>
+
+        {/* Error fallback */}
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </BrowserRouter>
   );
