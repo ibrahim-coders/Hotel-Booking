@@ -1,57 +1,38 @@
+import { useEffect, useState } from 'react';
 import { CiStar } from 'react-icons/ci';
 import { RiMapPin2Line } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
-
-// Sample data for featured hotels
-const featuredHotels = [
-  {
-    id: 1,
-    name: 'Grand Plaza Hotel',
-    location: 'New York City, USA',
-    rating: 4.8,
-    price: 249,
-    image:
-      'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800&auto=format&fit=crop',
-    features: ['Free WiFi', 'Swimming Pool', 'Spa'],
-  },
-  {
-    id: 2,
-    name: 'Seaside Resort & Spa',
-    location: 'Maldives',
-    rating: 4.9,
-    price: 599,
-    image:
-      'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=800&auto=format&fit=crop',
-    features: ['Beach Access', 'All Inclusive', 'Luxury Spa'],
-  },
-  {
-    id: 3,
-    name: 'Mountain View Lodge',
-    location: 'Aspen, Colorado',
-    rating: 4.7,
-    price: 329,
-    image:
-      'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?q=80&w=800&auto=format&fit=crop',
-    features: ['Ski Resort', 'Restaurant', 'Fireplace'],
-  },
-  {
-    id: 4,
-    name: 'City Center Suites',
-    location: 'London, UK',
-    rating: 4.6,
-    price: 279,
-    image:
-      'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?q=80&w=800&auto=format&fit=crop',
-    features: ['Business Center', 'Fitness Room', 'Restaurant'],
-  },
-];
+import useAxiosePublic from '../../hooks/useAxiosPublic';
+import { Spinner } from '@material-tailwind/react';
 
 const FeaturedHotels = () => {
+  const axiosPublic = useAxiosePublic();
   const navigate = useNavigate();
+  const [featuredHotels, setFeaturedHotels] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // const handleViewDetails = () => {
-  //   navigate(`/hotel/${hotelId}`);
-  // };
+  useEffect(() => {
+    const fetchHotelsData = async () => {
+      try {
+        const response = await axiosPublic.get('/hotels/featured');
+        setFeaturedHotels(response?.data || []);
+      } catch (error) {
+        console.error('Failed to fetch featured hotels:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchHotelsData();
+  }, [axiosPublic]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center py-20">
+        <Spinner className="h-12 w-12 text-hotel-blue" />
+      </div>
+    );
+  }
 
   return (
     <section className="py-16 bg-white">
@@ -62,28 +43,32 @@ const FeaturedHotels = () => {
           </h2>
           <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
             Explore our handpicked selection of extraordinary hotels and resorts
-            around the world
+            around the world.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {featuredHotels.map(hotel => (
             <div
-              key={hotel.id}
-              className="overflow-hidden hotel-card-shadow transition-transform duration-300 hover:-translate-y-1"
+              key={hotel._id}
+              className="overflow-hidden hotel-card-shadow transition-transform duration-300 hover:-translate-y-1 bg-white rounded-lg"
             >
               <div className="relative h-48 overflow-hidden">
-                <img
-                  src={hotel.image}
-                  alt={hotel.name}
-                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                />
-                <h2 className="absolute top-3 right-3 bg-white text-hotel-blue">
+                {hotel?.images?.slice(0, 1).map((imgObj, index) => (
+                  <img
+                    key={index}
+                    src={imgObj}
+                    alt={hotel.name}
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                  />
+                ))}
+
+                <h2 className="absolute top-3 right-3 bg-white text-hotel-blue px-2 py-1 text-sm font-semibold shadow">
                   Featured
                 </h2>
               </div>
 
-              <div className="pt-4">
+              <div className="p-4">
                 <div className="flex justify-between items-start">
                   <h3 className="font-bold text-lg text-hotel-blue">
                     {hotel.name}
@@ -95,36 +80,37 @@ const FeaturedHotels = () => {
                     </span>
                   </div>
                 </div>
+
                 <div className="flex items-center mt-2 text-sm text-gray-500">
                   <RiMapPin2Line className="w-4 h-4 mr-1" />
                   <span>{hotel.location}</span>
                 </div>
+
                 <div className="mt-3 flex flex-wrap gap-2">
-                  {hotel.features.map((feature, i) => (
-                    <p
-                      key={i}
-                      variant="secondary"
-                      className="bg-hotel-lightblue text-hotel-blue"
+                  {hotel?.featured?.map((feature, index) => (
+                    <span
+                      key={index}
+                      className="bg-hotel-lightblue text-hotel-blue text-xs px-2 py-1 rounded"
                     >
                       {feature}
-                    </p>
+                    </span>
                   ))}
                 </div>
-              </div>
 
-              <div className="flex justify-between items-center pt-0">
-                <div>
-                  <span className="text-xl font-bold text-hotel-blue">
-                    ${hotel.price}
-                  </span>
-                  <span className="text-sm text-gray-500">/night</span>
+                <div className="flex justify-between items-center mt-4">
+                  <div>
+                    <span className="text-xl font-bold text-hotel-blue">
+                      ${hotel.price}
+                    </span>
+                    <span className="text-sm text-gray-500"> /night</span>
+                  </div>
+                  <button
+                    className="bg-hotel-blue text-white px-4 py-2 rounded hover:bg-blue-700"
+                    onClick={() => navigate(`/hotel/${hotel._id}`)}
+                  >
+                    View Details
+                  </button>
                 </div>
-                <button
-                  className="bg-hotel-blue hover:bg-blue-700"
-                  // onClick={() => handleViewDetails(hotel.id)}
-                >
-                  View Details
-                </button>
               </div>
             </div>
           ))}
@@ -132,8 +118,8 @@ const FeaturedHotels = () => {
 
         <div className="text-center mt-12">
           <button
-            variant="outline"
-            className="border-hotel-blue text-hotel-blue hover:bg-hotel-blue hover:text-white"
+            className="border border-hotel-blue text-hotel-blue px-6 py-2 rounded hover:bg-hotel-blue hover:text-white transition"
+            onClick={() => navigate('/hotels')}
           >
             View All Hotels
           </button>

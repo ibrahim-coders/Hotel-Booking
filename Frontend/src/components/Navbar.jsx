@@ -13,7 +13,7 @@ const Navbar = () => {
   const [isOpen, setOpen] = useState(false);
   const axiosPublic = useAxiosePublic();
   const setUser = useAuthStore(state => state.setUser);
-  console.log(user, setUser);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -43,7 +43,6 @@ const Navbar = () => {
       );
       setUser(null);
       toast.success(res.data?.message);
-      console.log(res.data?.message);
     } catch (error) {
       console.log(error);
     }
