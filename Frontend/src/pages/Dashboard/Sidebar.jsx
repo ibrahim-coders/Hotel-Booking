@@ -32,16 +32,18 @@ import { BsBookmarkCheck } from 'react-icons/bs';
 
 import { useEffect, useState } from 'react';
 import logo from '../../assets/star-hotel.png';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const SidebarContent = ({ open, handleOpen }) => (
   <div className="h-full">
-    <div className="mb-2 flex items-center gap-4 p-4 ">
-      <img src={logo} alt="brand" className="h-8 w-8" />
-      <Typography variant="h5" color="blue-gray">
-        Start-Hotel
-      </Typography>
-    </div>
+    <Link to="/">
+      <div className="mb-2 flex items-center gap-4 p-4 ">
+        <img src={logo} alt="brand" className="h-8 w-8" />
+        <Typography variant="h5" color="blue-gray">
+          Start-Hotel
+        </Typography>
+      </div>
+    </Link>
     <div className="p-2 pr-2">
       <input
         type="text"

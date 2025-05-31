@@ -20,6 +20,7 @@ const uploadImage = async imageData => {
       }/image/upload`,
       formData
     );
+
     return response.data.secure_url;
   } catch (error) {
     console.error(
