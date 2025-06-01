@@ -102,8 +102,8 @@ const Navbar = () => {
                 to="/"
                 className={({ isActive }) =>
                   `transition-colors hover:text-hotel-teal ${
-                    isScrolled ? 'text-[#1A4D8C]' : 'text-white'
-                  } ${isActive ? 'font-bold underline text-hotel-teal' : ''}`
+                    isScrolled ? 'text-teal-500' : 'text-teal-500'
+                  } ${isActive ? 'font-bold underline text-teal-500' : ''}`
                 }
               >
                 Home
@@ -114,8 +114,8 @@ const Navbar = () => {
                 to="/hotels"
                 className={({ isActive }) =>
                   `transition-colors hover:text-hotel-teal ${
-                    isScrolled ? 'text-[#1A4D8C]' : 'text-white'
-                  } ${isActive ? 'font-bold underline text-hotel-teal' : ''}`
+                    isScrolled ? 'text-teal-500' : 'text-teal-500'
+                  } ${isActive ? 'font-bold underline text-teal-500' : ''}`
                 }
               >
                 Hotels
@@ -126,8 +126,8 @@ const Navbar = () => {
                 to="/about"
                 className={({ isActive }) =>
                   `transition-colors hover:text-hotel-teal ${
-                    isScrolled ? 'text-[#1A4D8C]' : 'text-white'
-                  } ${isActive ? 'font-bold underline text-hotel-teal' : ''}`
+                    isScrolled ? 'text-teal-500' : 'text-teal-500'
+                  } ${isActive ? 'font-bold underline text-teal-500' : ''}`
                 }
               >
                 About Us
@@ -138,8 +138,8 @@ const Navbar = () => {
                 to="/contact"
                 className={({ isActive }) =>
                   `transition-colors hover:text-hotel-teal ${
-                    isScrolled ? 'text-[#1A4D8C]' : 'text-white'
-                  } ${isActive ? 'font-bold underline text-hotel-teal' : ''}`
+                    isScrolled ? 'text-teal-500' : 'text-teal-500'
+                  } ${isActive ? 'font-bold underline text-teal-500' : ''}`
                 }
               >
                 Contact

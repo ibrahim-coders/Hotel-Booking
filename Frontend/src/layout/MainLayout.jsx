@@ -7,7 +7,7 @@ const MainLayout = () => {
   const noLayouts = ['/login', 'register'];
   const isLayoutHidden = noLayouts.includes(loaction.pathname);
   return (
-    <div>
+    <div className="min-h-screen">
       {!isLayoutHidden && <Navbar />}
       <Outlet />
       {!isLayoutHidden && <Footer />}

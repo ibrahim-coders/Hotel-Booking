@@ -10,6 +10,8 @@ import Profile from '../pages/Profile.jsx';
 import DashboardLayout from '../layout/DashboardLayout.jsx';
 import DashboardHome from '../pages/Dashboard/DashboardHome.jsx';
 import AddHotel from '../pages/Dashboard/AddHotel.jsx';
+import Hotels from '../pages/Hotels/Hotels.jsx';
+import HotelDetails from '../pages/HotelDetails.jsx';
 
 const Router = () => {
   return (
@@ -17,6 +19,8 @@ const Router = () => {
       <Routes>
         <Route element={<MainLayout />}>
           <Route index element={<Home />} />
+          <Route path="hotels" element={<Hotels />} />
+          <Route path="/hotel/:id" element={<HotelDetails />} />
           <Route path="about" element={<AboutPages />} />
           <Route path="contact" element={<Contact />} />
           <Route path="profile" element={<Profile />} />
