@@ -35,7 +35,7 @@ const FeaturedHotels = () => {
   }
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-10 bg-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-hotel-dark">
@@ -48,10 +48,10 @@ const FeaturedHotels = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {featuredHotels.map(hotel => (
+          {featuredHotels.slice(0, 4).map(hotel => (
             <div
               key={hotel._id}
-              className="overflow-hidden hotel-card-shadow transition-transform duration-300 hover:-translate-y-1 bg-white rounded-lg"
+              className="overflow-hidden shadow transition-transform duration-300 hover:-translate-y-1 bg-white rounded-lg"
             >
               <div className="relative h-48 overflow-hidden">
                 {hotel?.images?.slice(0, 1).map((imgObj, index) => (
@@ -63,18 +63,16 @@ const FeaturedHotels = () => {
                   />
                 ))}
 
-                <h2 className="absolute top-3 right-3 bg-white text-hotel-blue px-2 py-1 text-sm font-semibold shadow">
+                <button className="absolute top-3 right-3 bg-white text-blue-500 px-2 py-1 text-sm font-semibold shadow">
                   Featured
-                </h2>
+                </button>
               </div>
 
               <div className="p-4">
                 <div className="flex justify-between items-start">
-                  <h3 className="font-bold text-lg text-hotel-blue">
-                    {hotel.name}
-                  </h3>
+                  <h3 className=" text-lg text-blue-400">{hotel.name}</h3>
                   <div className="flex items-center">
-                    <CiStar className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                    <CiStar className="w-4 h-4 text-orange-500 fill-orange-600" />
                     <span className="text-sm font-medium ml-1">
                       {hotel.rating}
                     </span>
@@ -90,7 +88,7 @@ const FeaturedHotels = () => {
                   {hotel?.featured?.map((feature, index) => (
                     <span
                       key={index}
-                      className="bg-hotel-lightblue text-hotel-blue text-xs px-2 py-1 rounded"
+                      className="bg-blue-600/10 text-blue text-xs px-2 py-1 rounded"
                     >
                       {feature}
                     </span>
@@ -99,13 +97,13 @@ const FeaturedHotels = () => {
 
                 <div className="flex justify-between items-center mt-4">
                   <div>
-                    <span className="text-xl font-bold text-hotel-blue">
+                    <span className="text-xl font-bold text-blue-500">
                       ${hotel.price}
                     </span>
                     <span className="text-sm text-gray-500"> /night</span>
                   </div>
                   <button
-                    className="bg-hotel-blue text-white px-4 py-2 rounded hover:bg-blue-700"
+                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
                     onClick={() => navigate(`/hotel/${hotel._id}`)}
                   >
                     View Details
@@ -118,7 +116,7 @@ const FeaturedHotels = () => {
 
         <div className="text-center mt-12">
           <button
-            className="border border-hotel-blue text-hotel-blue px-6 py-2 rounded hover:bg-hotel-blue hover:text-white transition"
+            className="border border-blue-500 text-blue-500 px-6 py-2 rounded hover:bg-blue-700 hover:text-white transition"
             onClick={() => navigate('/hotels')}
           >
             View All Hotels
