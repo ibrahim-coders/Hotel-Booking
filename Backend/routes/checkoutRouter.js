@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Checkout = require('../models/checkoutModel');
-
+const custemrs = require('../middleware/custemrs');
 // Create a new checkout/booking
-router.post('/', async (req, res) => {
+router.post('/', custemrs, async (req, res) => {
   try {
     const checkout = new Checkout(req.body);
     await checkout.save();

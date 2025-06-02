@@ -67,7 +67,6 @@ const HotelDetails = () => {
 
   const totalNights = getNights();
 
-  console.log(totalNights);
   const {
     isPending,
     error,

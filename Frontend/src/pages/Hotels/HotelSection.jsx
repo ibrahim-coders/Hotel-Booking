@@ -4,21 +4,24 @@ import useAxiosePublic from '../../hooks/useAxiosPublic';
 const HotelSection = ({ search, setFeaturedHotels }) => {
   const axiosPublic = useAxiosePublic();
   const [searchTerm, setSearch] = useState(search);
-
+  const [category, setCategory] = useState('');
+  const [sort, setSort] = useState('');
+  console.log(category, sort);
   const handleSearch = async () => {
-    try {
-      const res = await axiosPublic.get(
-        `/hotels/search?location=${searchTerm}`
-      );
-      setFeaturedHotels(res.data);
-    } catch (err) {
-      console.log(err);
-    }
+    let query = [];
+    if (searchTerm) query.push(`location=${searchTerm}`);
+    if (category && category !== 'all') query.push(`category=${category}`);
+    if (sort) query.push(`sort=${sort}`);
+    const queryString = query.length ? `?${query.join('&')}` : '';
+
+    const res = await axiosPublic.get(`/hotels${queryString}`);
+    setFeaturedHotels(res.data);
   };
 
   const searchClose = async () => {
     setSearch('');
-
+    setCategory('');
+    setSort('');
     try {
       const res = await axiosPublic.get('/hotels');
       setFeaturedHotels(res.data);
@@ -70,7 +73,14 @@ const HotelSection = ({ search, setFeaturedHotels }) => {
 
           {/* Category Filter */}
           <div>
-            <select className="w-48 px-3 py-2 border-2 border-blue-400 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500">
+            <select
+              value={category}
+              onChange={e => {
+                setCategory(e.target.value);
+                setTimeout(handleSearch, 0);
+              }}
+              className="w-48 px-3 py-2 border-2 border-blue-400 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+            >
               <option value="">Category</option>
               <option value="all">All Categories</option>
               <option value="luxury">Luxury</option>
@@ -84,7 +94,14 @@ const HotelSection = ({ search, setFeaturedHotels }) => {
 
           {/* Sort Filter */}
           <div>
-            <select className="w-48 px-3 py-2 border-2 border-blue-400 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500">
+            <select
+              value={sort}
+              onChange={e => {
+                setSort(e.target.value);
+                setTimeout(handleSearch, 0);
+              }}
+              className="w-48 px-3 py-2 border-2 border-blue-400 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
+            >
               <option value="">Sort by</option>
               <option value="rating">Highest Rated</option>
               <option value="price-low">Price: Low to High</option>

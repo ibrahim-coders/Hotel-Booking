@@ -46,8 +46,20 @@ const hotels = async (req, res) => {
 
 // Get all hotels
 const getHotels = async (req, res) => {
+  const { location, category, sort } = req.query;
+  let filter = {};
+  let sortOption = {};
+
+  if (location) filter.location = { $regex: location, $options: 'i' };
+  if (category && category !== 'all') filter.category = category;
+
+  if (sort === 'rating') sortOption.rating = -1;
+  else if (sort === 'price-low') sortOption.price = 1;
+  else if (sort === 'price-high') sortOption.price = -1;
+  else if (sort === 'name') sortOption.name = 1;
+
   try {
-    const hotels = await Hotels.find();
+    const hotels = await Hotels.find(filter).sort(sortOption);
     res.status(200).json(hotels);
   } catch (error) {
     console.error('Error fetching hotels:', error.message);
@@ -84,12 +96,20 @@ const hotelsDeteails = async (req, res) => {
 //Search name query
 
 const searchQuery = async (req, res) => {
-  const { location } = req.query;
+  const { location, category, sort } = req.query;
+  let filter = {};
+  let sortOption = {};
   try {
-    const hotel = await Hotels.find({
-      location: { $regex: location, $options: 'i' },
-    });
-    res.status(200).json(hotel);
+    if (location) filter.location = { $regex: location, $options: 'i' };
+    if (category && category !== 'all') filter.category = category;
+
+    // Sort logic
+    if (sort === 'rating') sortOption.rating = -1;
+    else if (sort === 'price-low') sortOption.price = 1;
+    else if (sort === 'price-high') sortOption.price = -1;
+    else if (sort === 'name') sortOption.name = 1;
+    const hotels = await Hotels.find(filter).sort(sortOption);
+    res.status(200).json(hotels);
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }

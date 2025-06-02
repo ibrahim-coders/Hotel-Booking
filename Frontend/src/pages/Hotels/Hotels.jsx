@@ -30,10 +30,10 @@ const Hotels = () => {
   if (loading) return <Spinner />;
 
   return (
-    <main className="py-10">
+    <div className="py-10 max-h-screen flex flex-col">
       <div className="container mx-auto px-4">
         {/* Header section */}
-        <section className="bg-[#1A4D8C] text-white py-20 mt-16">
+        <div className="bg-[#1A4D8C] text-white py-20 mt-16">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               Find Your Perfect Stay
@@ -43,7 +43,7 @@ const Hotels = () => {
               and comfort.
             </p>
           </div>
-        </section>
+        </div>
 
         {/* Hotel features */}
         <HotelSection
@@ -112,7 +112,7 @@ const Hotels = () => {
                       </span>
                     ))}
                     <span className="bg-[#E6F4F1] text-gray-600 text-xs p-1  rounded hover:bg-[#255691] duration-200 transition-colors">
-                      +more
+                      +1 more
                     </span>
                   </div>
 
@@ -141,7 +141,7 @@ const Hotels = () => {
           </div>
         )}
       </div>
-    </main>
+    </div>
   );
 };
 

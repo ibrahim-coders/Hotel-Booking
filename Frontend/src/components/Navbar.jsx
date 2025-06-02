@@ -13,7 +13,7 @@ const Navbar = () => {
   const [isOpen, setOpen] = useState(false);
   const axiosPublic = useAxiosePublic();
   const setUser = useAuthStore(state => state.setUser);
-
+  console.log(user);
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);

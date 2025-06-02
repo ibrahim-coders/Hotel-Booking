@@ -3,9 +3,6 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const connectDB = require('./config/db');
 const cookieParser = require('cookie-parser');
-const userUpade = require('./routes/userUpdate');
-const verifyToken = require('./middleware/verifyToken');
-const getUserInfo = require('./controllers/getUserInfo');
 
 //config
 dotenv.config();
@@ -23,7 +20,6 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use('/api/auth', require('./routes/auth'));
-app.use('/api/users', userUpade);
 app.get('/api/auth');
 app.use('/api/hotels', require('./routes/hotelRouter'));
 app.use('/api/hotels', require('./routes/hotelRouter'));
