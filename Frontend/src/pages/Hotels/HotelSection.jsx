@@ -52,7 +52,7 @@ const HotelSection = ({ search, setFeaturedHotels }) => {
                 value={searchTerm}
                 onChange={e => setSearch(e.target.value)}
                 type="text"
-                placeholder="Search hotels or locations..."
+                placeholder="Search locations..."
                 className=" relative w-full pl-10 pr-4 py-2 border-2 border-blue-400 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
               <IoIosClose

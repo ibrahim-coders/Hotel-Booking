@@ -1,10 +1,29 @@
 const Hotels = require('../models/hotelModels');
+const stripe = require('stripe')(process.env.STRIPE_SECRET);
 
 // Add a new hotel
 const hotels = async (req, res) => {
-  const { name, location, price, featured, images, description } = req.body;
+  const {
+    name,
+    location,
+    price,
+    featured,
+    images,
+    rating,
+    category,
+    description,
+  } = req.body;
   try {
-    if (!name || !location || !price || !featured || !images || !description) {
+    if (
+      !name ||
+      !location ||
+      !price ||
+      !featured ||
+      !images ||
+      !rating ||
+      !category ||
+      !description
+    ) {
       return res.status(400).json({ message: 'All fields are required' });
     }
     const hotel = new Hotels({
@@ -13,6 +32,8 @@ const hotels = async (req, res) => {
       price,
       featured,
       images,
+      rating,
+      category,
       description,
     });
     await hotel.save();
@@ -74,10 +95,29 @@ const searchQuery = async (req, res) => {
   }
 };
 
+// payment
+
+const stripePayment = async (req, res) => {
+  const { amount } = req.body;
+
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount,
+      currency: 'usd',
+      automatic_payment_methods: { enabled: true },
+    });
+
+    res.send({ clientSecret: paymentIntent.client_secret });
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+};
+
 module.exports = {
   hotels,
   getHotels,
   hotelsDeteails,
   getFeaturedHotels,
   searchQuery,
+  stripePayment,
 };

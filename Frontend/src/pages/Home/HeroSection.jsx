@@ -10,7 +10,7 @@ const HeroSection = () => {
       >
         {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/30">
-          <div className="flex items-center justify-center items-center h-full px-4">
+          <div className="flex items-center justify-center  h-full px-4">
             <div className="text-center max-w-2xl space-y-4">
               <h2 className="text-2xl md:text-4xl lg:text-5xl text-white font-bold">
                 Find Your Perfect Stay with Start Hotel

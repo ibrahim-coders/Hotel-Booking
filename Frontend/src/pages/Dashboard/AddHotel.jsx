@@ -8,17 +8,8 @@ import useAxiosPublic from '../../hooks/useAxiosPublic';
 import Spinner from '../../components/Spinner';
 import { toast } from 'react-hot-toast';
 import HotelImageSelect from '../../components/HotelImageSeleact';
+import { IoMdClose } from 'react-icons/io';
 
-// Constants
-// const MAX_FILE_SIZE = 5 * 1024 * 1024;
-// const ACCEPTED_IMAGE_TYPES = [
-//   'image/jpeg',
-//   'image/jpg',
-//   'image/png',
-//   'image/webp',
-// ];
-
-// Zod Schema
 const schema = z.object({
   name: z.string().min(1, 'Hotel name is required'),
   location: z.string().min(1, 'Location is required'),
@@ -30,7 +21,9 @@ const schema = z.object({
     .array(z.any())
     .min(1, 'At least one image is required')
     .max(3, 'You can upload up to 3 images'),
-  description: z.string().min(10).max(200),
+  description: z.string().min(10).max(500),
+  rating: z.number().min(1).max(5),
+  category: z.string().min(1),
 });
 
 const AddHotel = () => {
@@ -56,6 +49,8 @@ const AddHotel = () => {
       featured: [],
       images: [],
       description: '',
+      rating: 1,
+      category: '',
     },
     mode: 'onChange',
   });
@@ -125,7 +120,7 @@ const AddHotel = () => {
               type="text"
               {...register('name')}
               placeholder="Hotel Name"
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border-2 rounded focus:outline-none focus:border-blue-500 border-blue-500 text-xs"
             />
             {errors.name && (
               <p className="text-red-500 text-sm">{errors.name.message}</p>
@@ -137,7 +132,7 @@ const AddHotel = () => {
               type="text"
               {...register('location')}
               placeholder="Location"
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border-2 rounded focus:outline-none focus:border-blue-500 border-blue-500 text-xs"
             />
             {errors.location && (
               <p className="text-red-500 text-sm">{errors.location.message}</p>
@@ -152,7 +147,7 @@ const AddHotel = () => {
               type="number"
               {...register('price')}
               placeholder="Price"
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border-2 rounded focus:outline-none focus:border-blue-500 border-blue-500 text-xs"
             />
             {errors.price && (
               <p className="text-red-500 text-sm">{errors.price.message}</p>
@@ -167,7 +162,7 @@ const AddHotel = () => {
                 value={featuredInput}
                 onChange={e => setFeaturedInput(e.target.value)}
                 placeholder="Add Feature"
-                className="w-full p-2 border rounded"
+                className="w-full p-2 border-2 rounded focus:outline-none focus:border-blue-500 border-blue-500 text-xs"
               />
               <button
                 type="button"
@@ -180,22 +175,25 @@ const AddHotel = () => {
             {errors.featured && (
               <p className="text-red-500 text-sm">{errors.featured.message}</p>
             )}
-            <ul className="text-sm mt-1 list-disc list-inside text-gray-600">
+            <ul className=" flex gap-2 text-sm mt-1 list-disc list-inside text-gray-600">
               {featuredList.map((item, i) => (
-                <li key={i} className="flex items-center justify-between">
+                <li
+                  key={i}
+                  className="flex flex-wrap items-center justify-between"
+                >
                   {item}
                   <button
                     onClick={() => handleRemoveFeatured(i)}
                     className="ml-2 text-red-500 hover:underline"
                   >
-                    Remove
+                    <IoMdClose className="cursor-pointer" />
                   </button>
                 </li>
               ))}
             </ul>
           </div>
         </div>
-
+        {/* hotel image select */}
         <label className="block text-sm">Upload Images (Max 3)</label>
         <HotelImageSelect
           imageValue={watch('images')}
@@ -209,12 +207,47 @@ const AddHotel = () => {
           <p className="text-red-500 text-sm">{errors.images.message}</p>
         )}
 
+        {/* Rating */}
+        <div className="flex gap-2 w-full">
+          <div className="w-full">
+            <label className="block text-sm">Rating</label>
+            <select
+              className="w-full p-2 border-2 rounded focus:outline-none focus:border-blue-500 border-blue-500 text-xs"
+              {...register('rating', { valueAsNumber: true })}
+            >
+              <option value="">Select Rating</option>
+              {[1, 2, 3, 4, 5].map(r => (
+                <option key={r} value={r}>
+                  {r}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="w-full">
+            <label className="block text-sm ">Category</label>
+            <select
+              {...register('category')}
+              className="w-full p-2 border-2 rounded focus:outline-none focus:border-blue-500 border-blue-500 text-xs"
+            >
+              <option value="">Select Category</option>
+              <option value="luxury">Luxury</option>
+              <option value="resort">Resort</option>
+              <option value="business">Business</option>
+              <option value="boutique">Boutique</option>
+              <option value="beach">Beach</option>
+              <option value="lodge">Lodge</option>
+            </select>
+            {errors.category && (
+              <p className="text-red-500 text-sm">{errors.category.message}</p>
+            )}
+          </div>
+        </div>
         <label className="block text-sm">Description</label>
         <textarea
           {...register('description')}
           rows={4}
-          placeholder="Write a brief description here..."
-          className="w-full p-2 border rounded text-sm resize-y"
+          placeholder="your description here..."
+          className="w-full p-2 border-2 rounded focus:outline-none focus:border-blue-500 border-blue-500 text-xs"
         />
         {errors.description && (
           <p className="text-red-500 text-sm">{errors.description.message}</p>

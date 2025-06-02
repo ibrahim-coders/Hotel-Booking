@@ -7,13 +7,11 @@ import {
   FaUtensilSpoon,
   FaPhone,
   FaDumbbell,
-  FaUser,
 } from 'react-icons/fa';
 import { LuMapPinCheckInside } from 'react-icons/lu';
 import { BiCoffeeTogo } from 'react-icons/bi';
 import { MdOutlineWaves } from 'react-icons/md';
 import { CiMail } from 'react-icons/ci';
-import { FaCalendarDays } from 'react-icons/fa6';
 import Footer from '../components/Footer';
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
@@ -21,6 +19,7 @@ import { useQuery } from '@tanstack/react-query';
 import useAxiosePublic from '../hooks/useAxiosPublic';
 import Spinner from '../components/Spinner';
 import ErrorPage from './Error/ErrorPages';
+import DetailsSidebar from './DetailsSidebar';
 
 const HotelDetails = () => {
   const service = {
@@ -55,7 +54,21 @@ const HotelDetails = () => {
   const [checkInDate, setCheckInDate] = useState('');
   const [checkOutDate, setCheckOutDate] = useState('');
   const axiosPublic = useAxiosePublic();
+  console.log(checkInDate, checkOutDate);
+  const getNights = () => {
+    if (checkInDate && checkOutDate) {
+      const checkIn = new Date(checkInDate);
+      const checkOut = new Date(checkOutDate);
+      const differenceInTime = checkOut - checkIn;
+      const days = Math.ceil(differenceInTime / (1000 * 60 * 60 * 24));
+      return days > 0 ? days : 0;
+    }
+    return 0;
+  };
 
+  const totalNights = getNights();
+
+  console.log(totalNights);
   const {
     isPending,
     error,
@@ -197,54 +210,18 @@ const HotelDetails = () => {
           </div>
 
           {/* SIDEBAR */}
-          <div className="lg:col-span-1 space-y-4 sticky top-4">
-            <h3 className="text-lg font-semibold">Book Your Stay</h3>
-            <div className="space-y-3">
-              <label className="block text-sm font-medium">Check-in Date</label>
-              <div className="relative">
-                <FaCalendarDays className="absolute left-3 top-3 text-gray-500" />
-                <input
-                  type="date"
-                  value={checkInDate}
-                  onChange={e => setCheckInDate(e.target.value)}
-                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded"
-                />
-              </div>
-
-              <label className="block text-sm font-medium">
-                Check-out Date
-              </label>
-              <div className="relative">
-                <FaCalendarDays className="absolute left-3 top-3 text-gray-500" />
-                <input
-                  type="date"
-                  value={checkOutDate}
-                  onChange={e => setCheckOutDate(e.target.value)}
-                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded"
-                />
-              </div>
-
-              <label className="block text-sm font-medium">Guests</label>
-              <div className="relative">
-                <FaUser className="absolute left-3 top-3 text-gray-500" />
-                <input
-                  type="number"
-                  min="1"
-                  value={guests}
-                  onChange={e => setGuests(Number(e.target.value))}
-                  className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded"
-                />
-              </div>
-
-              <button className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
-                Check Availability
-              </button>
-            </div>
-          </div>
+          <DetailsSidebar
+            checkInDate={checkInDate}
+            setCheckInDate={setCheckInDate}
+            checkOutDate={checkOutDate}
+            setCheckOutDate={setCheckOutDate}
+            guests={guests}
+            setGuests={setGuests}
+            price={hotelData.price}
+            totalNights={totalNights}
+          />
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 };

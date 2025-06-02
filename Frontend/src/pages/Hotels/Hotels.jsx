@@ -76,7 +76,7 @@ const Hotels = () => {
                     />
                   )}
                   <button className="absolute top-3 right-3 bg-white text-blue-500 px-2 py-1 text-sm font-semibold rounded">
-                    Featured
+                    {hotel.category}
                   </button>
                 </div>
 
