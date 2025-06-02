@@ -12,7 +12,6 @@ import { LuMapPinCheckInside } from 'react-icons/lu';
 import { BiCoffeeTogo } from 'react-icons/bi';
 import { MdOutlineWaves } from 'react-icons/md';
 import { CiMail } from 'react-icons/ci';
-import Footer from '../components/Footer';
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { useQuery } from '@tanstack/react-query';
@@ -54,7 +53,7 @@ const HotelDetails = () => {
   const [checkInDate, setCheckInDate] = useState('');
   const [checkOutDate, setCheckOutDate] = useState('');
   const axiosPublic = useAxiosePublic();
-  console.log(checkInDate, checkOutDate);
+
   const getNights = () => {
     if (checkInDate && checkOutDate) {
       const checkIn = new Date(checkInDate);
@@ -219,6 +218,9 @@ const HotelDetails = () => {
             setGuests={setGuests}
             price={hotelData.price}
             totalNights={totalNights}
+            hotelName={hotelData.name}
+            hotelLocation={hotelData.location}
+            hotelId={hotelData._id}
           />
         </div>
       </div>

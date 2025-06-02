@@ -30,6 +30,7 @@ app.use('/api/hotels', require('./routes/hotelRouter'));
 app.use('/api/hotel', require('./routes/hotelRouter'));
 app.use('/api/hotels', require('./routes/hotelRouter'));
 app.use('/api/stripe', require('./routes/hotelRouter'));
+app.use('/api/checkout', require('./routes/checkoutRouter'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

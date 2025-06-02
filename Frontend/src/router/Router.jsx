@@ -13,6 +13,7 @@ import AddHotel from '../pages/Dashboard/AddHotel.jsx';
 import Hotels from '../pages/Hotels/Hotels.jsx';
 import HotelDetails from '../pages/HotelDetails.jsx';
 import ChackOut from '../components/ChackOut.jsx';
+import PaymentSuccess from '../components/PaymentSuccess.jsx';
 
 const Router = () => {
   return (
@@ -25,6 +26,7 @@ const Router = () => {
           <Route path="about" element={<AboutPages />} />
           <Route path="contact" element={<Contact />} />
           <Route path="payment" element={<ChackOut />} />
+          <Route path="/payment-success" element={<PaymentSuccess />} />
           <Route path="profile" element={<Profile />} />
         </Route>
 

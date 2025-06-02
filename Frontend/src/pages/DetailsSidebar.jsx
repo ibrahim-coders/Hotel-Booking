@@ -10,12 +10,25 @@ const DetailsSidebar = ({
   setGuests,
   price,
   totalNights,
+  hotelName,
+  hotelLocation,
+  hotelId,
 }) => {
   const rooms = Math.ceil(guests / 2);
   const totalHotelPrice = rooms * price * totalNights;
   const navigate = useNavigate();
   const chackOut = () => {
-    navigate('/payment');
+    navigate('/payment', {
+      state: {
+        guests,
+        checkInDate,
+        checkOutDate,
+        totalHotelPrice,
+        hotelName,
+        hotelLocation,
+        hotelId,
+      },
+    });
   };
   return (
     <div className="lg:col-span-1 space-y-4 sticky top-4">

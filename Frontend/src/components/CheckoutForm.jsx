@@ -9,34 +9,38 @@ const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
 
-  const handleSubmit = async event => {
-    event.preventDefault();
+  const handleSubmit = async e => {
+    e.preventDefault();
+
     if (!stripe || !elements) return;
 
     setLoading(true);
+
     const result = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: 'http://localhost:5173/payment-success',
+        return_url: `${window.location.origin}/payment-success?payment_intent={PAYMENT_ID}`,
       },
     });
 
     if (result.error) {
-      alert(result.error.message);
+      setMessage(result.error.message);
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="space-y-4">
       <PaymentElement />
       <button
         disabled={!stripe || loading}
-        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-300 ease-in-out cursor-pointer mt-4"
+        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition disabled:opacity-50"
       >
         {loading ? 'Processing...' : 'Pay Now'}
       </button>
+      {message && <p className="text-red-500 text-sm mt-2">{message}</p>}
     </form>
   );
 };
