@@ -13,7 +13,7 @@ const Navbar = () => {
   const [isOpen, setOpen] = useState(false);
   const axiosPublic = useAxiosePublic();
   const setUser = useAuthStore(state => state.setUser);
-  console.log(user);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -47,7 +47,15 @@ const Navbar = () => {
       console.log(error);
     }
   };
-
+  const fastWord = name => {
+    if (!name) return '';
+    const words = name.trim().split(' ');
+    let initials = '';
+    for (let i = 0; i < Math.min(words.length, 2); i++) {
+      initials += words[i][0];
+    }
+    return initials.toUpperCase();
+  };
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 pb-3 ${
@@ -155,15 +163,20 @@ const Navbar = () => {
                 <div className="inline-flex items-center divide-x divide-gray-300 rounded border border-gray-300 bg-[#1A4D8C] shadow-sm overflow-hidden">
                   {/* Avatar with Online Badge */}
                   <Link to="/profile" className="relative p-1.5">
-                    <img
-                      className="w-10 h-10 rounded-full"
-                      src={
-                        user.photoURL ||
-                        'https://i.ibb.co/9km0tXxd/istockphoto-1158245278-1024x1024.jpg'
-                      }
-                      alt="User"
-                    />
-                    <span className="absolute top-0 left-2 w-3 h-3 bg-green-400 border-2 border-white rounded-full"></span>
+                    <div className="relative h-12 w-12 overflow-hidden rounded-full bg-slate-300 text-xl font-semibold text-white">
+                      {user.image ? (
+                        <img
+                          src={user.image}
+                          alt={user.fullName}
+                          className="h-full w-full object-cover"
+                        />
+                      ) : (
+                        <span className="flex h-full w-full items-center justify-center">
+                          {fastWord(user.fullName)}
+                        </span>
+                      )}
+                    </div>
+                    <span className="absolute top-[5px] left-2 w-3 h-3 bg-green-400 border-2 border-white rounded-full"></span>
                   </Link>
 
                   {/* Dropdown Toggle */}

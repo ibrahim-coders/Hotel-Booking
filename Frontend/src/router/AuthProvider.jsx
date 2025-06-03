@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
+import useAxiosePublic from '../hooks/useAxiosPublic';
 import useAuthStore from '../store/authStore';
-import useAxiosPublic from '../hooks/useAxiosPublic';
 
 const AuthProvider = () => {
-  const axiosPublic = useAxiosPublic();
+  const axiosPublic = useAxiosePublic();
   const setUser = useAuthStore(state => state.setUser);
 
   useEffect(() => {
