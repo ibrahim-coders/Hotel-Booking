@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../store/authStore';
-const setUser = useAuthStore(state => state.setUser);
+
 const axiosCustomer = axios.create({
   baseURL: `${import.meta.env.VITE_BASEURL}`,
   withCredentials: true,
@@ -10,24 +10,8 @@ const axiosCustomer = axios.create({
 
 const useAxiosCustomer = () => {
   const navigate = useNavigate();
-  useEffect(() => {
-    const logout = async () => {
-      try {
-        const res = await axiosPublic.post(
-          '/auth/logout',
-          {},
-          {
-            withCredentials: true,
-          }
-        );
-        setUser(null);
-        toast.success(res.data?.message);
-      } catch (error) {
-        console.log(error);
-      }
-    }
- 
-}[])
+  const logout = useAuthStore(state => state.logout);
+
   useEffect(() => {
     axiosCustomer.interceptors.response.use(
       response => response,

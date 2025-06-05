@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import MainLayout from '../layout/MainLayout';
 import Home from '../pages/Home/Home';
 import AboutPages from '../pages/About/AboutPages';
@@ -6,20 +6,31 @@ import Contact from '../pages/Contact/Contact';
 import Login from '../pages/Auth/Login';
 import ErrorPage from '../pages/Error/ErrorPages';
 import Register from '../pages/Auth/Register';
-import Profile from '../pages/Profile.jsx';
-import DashboardLayout from '../layout/DashboardLayout.jsx';
-import DashboardHome from '../pages/Dashboard/DashboardHome.jsx';
-import AddHotel from '../pages/Dashboard/AddHotel.jsx';
 import Hotels from '../pages/Hotels/Hotels.jsx';
 import HotelDetails from '../pages/HotelDetails.jsx';
 import ChackOut from '../components/ChackOut.jsx';
 import PaymentSuccess from '../components/PaymentSuccess.jsx';
-import BrowseHotels from '../pages/Dashboard/Customers/BrowseHotels.jsx';
-import RoomBooking from '../pages/Dashboard/Customers/RoomBooking.jsx';
-import MyBookings from '../pages/Dashboard/Customers/MyBookings.jsx';
 import PrivateRoute from './PrivateRoute.jsx';
-import Overview from '../pages/Dashboard/Admin/Overview.jsx';
+import DashboardCustomer from '../pages/Dashboard/Customers/DashboardCustomer.jsx';
+import useAuthStore from '../store/authStore.js';
+import AdminDeshboard from '../pages/Dashboard/Admin/AdminDeshboard.jsx';
+import AdminProfile from '../pages/Dashboard/Admin/AdminProfile.jsx';
+import CustomerProfile from '../pages/Dashboard/Customers/CustomerProfile.jsx';
+const RoleBasedDashboard = () => {
+  const user = useAuthStore(state => state.user);
+  if (!user) return null;
+  if (user.role === 'Admin') return <AdminDeshboard />;
+  if (user.role === 'Customer') return <DashboardCustomer />;
+  return Navigate('/login');
+};
 
+const RoleBasedProfile = () => {
+  const user = useAuthStore(state => state.user);
+  if (!user) return null;
+  if (user.role === 'Admin') return <AdminProfile />;
+  if (user.role === 'Customer') return <CustomerProfile />;
+  return Navigate('/login');
+};
 const Router = () => {
   return (
     <BrowserRouter>
@@ -32,7 +43,6 @@ const Router = () => {
           <Route path="contact" element={<Contact />} />
           <Route path="payment" element={<ChackOut />} />
           <Route path="/payment-success" element={<PaymentSuccess />} />
-          <Route path="profile" element={<Profile />} />
         </Route>
 
         {/* Auth routes */}
@@ -44,54 +54,19 @@ const Router = () => {
           path="/deshboard"
           element={
             <PrivateRoute allowedRoles={['Admin', 'Customer']}>
-              <DashboardLayout />
+              <RoleBasedDashboard />
             </PrivateRoute>
           }
-        >
-          {/* Admin only */}
-          <Route
-            index
-            element={
-              <PrivateRoute allowedRoles={['Admin']}>
-                <Overview />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="add-hotel"
-            element={
-              <PrivateRoute allowedRoles={['Admin']}>
-                <AddHotel />
-              </PrivateRoute>
-            }
-          />
-          {/* Customer only */}
-          <Route
-            index
-            path="browese-hotel"
-            element={
-              <PrivateRoute allowedRoles={['Customer']}>
-                <BrowseHotels />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="room-booking"
-            element={
-              <PrivateRoute allowedRoles={['Customer']}>
-                <RoomBooking />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="my-Bookings"
-            element={
-              <PrivateRoute allowedRoles={['Customer']}>
-                <MyBookings />
-              </PrivateRoute>
-            }
-          />
-        </Route>
+        />
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute allowedRoles={['Admin', 'Customer']}>
+              <RoleBasedProfile />
+            </PrivateRoute>
+          }
+        />
+
         {/* Error fallback */}
         <Route path="*" element={<ErrorPage />} />
       </Routes>

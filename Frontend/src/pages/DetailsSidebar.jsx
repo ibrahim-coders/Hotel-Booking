@@ -1,6 +1,7 @@
 import { FaCalendarDays } from 'react-icons/fa6';
 import { FaUser } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import useAuthStore from '../store/authStore';
 const DetailsSidebar = ({
   checkInDate,
   setCheckInDate,
@@ -12,12 +13,18 @@ const DetailsSidebar = ({
   totalNights,
   hotelName,
   hotelLocation,
-  hotelId,
+  images,
 }) => {
   const rooms = Math.ceil(guests / 2);
   const totalHotelPrice = rooms * price * totalNights;
   const navigate = useNavigate();
+  const user = useAuthStore(state => state.user);
+  const location = useLocation();
+  console.log(location);
   const chackOut = () => {
+    if (!user) {
+      return navigate('/login', { state: { from: location } });
+    }
     navigate('/payment', {
       state: {
         guests,
@@ -26,7 +33,7 @@ const DetailsSidebar = ({
         totalHotelPrice,
         hotelName,
         hotelLocation,
-        hotelId,
+        images,
       },
     });
   };

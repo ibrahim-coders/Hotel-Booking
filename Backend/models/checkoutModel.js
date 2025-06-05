@@ -1,12 +1,11 @@
 const mongoose = require('mongoose');
 
 const checkoutSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'Users', required: true },
-  hotel: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Hotels',
-    required: true,
-  },
+  userName: { type: String },
+  userEmail: { type: String },
+  hotelName: { type: String },
+  hotelLocation: { type: String },
+  images: { type: String, required: true },
   guests: { type: Number, required: true },
   checkInDate: { type: Date, required: true },
   checkOutDate: { type: Date, required: true },

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash, FaUserPlus } from 'react-icons/fa6';
 import { CiHome } from 'react-icons/ci';
 import useAxiosePublic from '../../hooks/useAxiosPublic';
@@ -15,6 +15,7 @@ const Register = () => {
   const axiosPublic = useAxiosePublic();
   const navigate = useNavigate();
   const setUser = useAuthStore(state => state.setUser);
+  const location = useLocation();
   const handleRegister = async e => {
     e.preventDefault();
 
@@ -36,7 +37,8 @@ const Register = () => {
       );
       setUser(response.data?.user);
       toast.success(response.data?.message || 'Registration Successful');
-      navigate('/');
+      const redirectTo = location.state?.from?.pathname || '/';
+      navigate(redirectTo, { replace: true });
     } catch (error) {
       toast.error(error.response?.data?.message || 'Registration failed');
     }

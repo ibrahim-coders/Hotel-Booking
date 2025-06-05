@@ -1,7 +1,7 @@
 import { CiHome } from 'react-icons/ci';
 import { GrLogin } from 'react-icons/gr';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import useAxiosePublic from '../../hooks/useAxiosPublic';
 import toast from 'react-hot-toast';
@@ -18,7 +18,7 @@ const Login = () => {
   const axiosPublic = useAxiosePublic();
   const navigate = useNavigate();
   const setUser = useAuthStore(state => state.setUser);
-
+  const location = useLocation();
   const handleLogin = async e => {
     e.preventDefault();
     setEmailError('');
@@ -35,7 +35,8 @@ const Login = () => {
       );
       setUser(res.data?.user);
       toast.success(res.data?.message);
-      navigate('/');
+      const redirectTo = location.state?.from?.pathname || '/';
+      navigate(redirectTo, { replace: true });
     } catch (err) {
       const message = err.response?.data?.message;
 
@@ -117,7 +118,7 @@ const Login = () => {
               )}
               <button
                 type="button"
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                className="absolute right-3 top-5 -translate-y-1/2 text-gray-500"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (

@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 exports.register = async (req, res) => {
-  const { fullName, email, password, role = 'Customer' } = req.body;
+  const { fullName, email, password, role = 'Admin' } = req.body;
   try {
     const userExists = await User.findOne({ email });
     if (userExists)
@@ -71,6 +71,8 @@ exports.login = async (req, res) => {
         fullName: user.fullName,
         email: user.email,
         role: user.role,
+        image: user.image,
+        createdAt: user.createdAt,
       },
     });
   } catch (error) {
@@ -78,6 +80,95 @@ exports.login = async (req, res) => {
   }
 };
 
+exports.upDateUser = async (req, res) => {
+  const { fullName, email } = req.body;
+  try {
+    const userId = req.user.id;
+
+    const existingUser = await User.findOne({ email, _id: { $ne: userId } });
+    if (existingUser) {
+      return res.status(400).json({ message: 'Email already in use' });
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { fullName, email },
+      { new: true }
+    );
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json({
+      message: 'Profile updated successfully',
+      user: {
+        id: updatedUser._id,
+        fullName: updatedUser.fullName,
+        email: updatedUser.email,
+        role: updatedUser.role,
+        image: updatedUser.image,
+        createdAt: updatedUser.createdAt,
+      },
+    });
+  } catch (error) {
+    console.log('Update error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+exports.changePassword = async (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+  console.log(currentPassword, newPassword);
+  try {
+    const userId = req.user.id;
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    // Check current password
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch)
+      return res.status(400).json({ message: 'Current password is incorrect' });
+
+    // Update password
+    user.password = await bcrypt.hash(newPassword, 8);
+    await user.save();
+
+    res.json({ message: 'Password updated successfully' });
+  } catch (error) {
+    console.log('Update error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// image uploade
+exports.upDateUserImage = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { image } = req.body;
+    if (!image) return res.status(400).json({ message: 'No image provided' });
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      { image },
+      { new: true }
+    );
+    if (!updatedUser)
+      return res.status(404).json({ message: 'User not found' });
+
+    res.json({
+      message: 'Image updated successfully',
+      user: {
+        id: updatedUser._id,
+        fullName: updatedUser.fullName,
+        email: updatedUser.email,
+        role: updatedUser.role,
+        image: updatedUser.image,
+        createdAt: updatedUser.createdAt,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
 exports.logout = (req, res) => {
   res.clearCookie('token', {
     httpOnly: true,

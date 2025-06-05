@@ -19,13 +19,14 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
+app.use('/api/user/', require('./routes/auth'));
 app.use('/api/auth', require('./routes/auth'));
-app.get('/api/auth');
 app.use('/api/hotels', require('./routes/hotelRouter'));
 app.use('/api/hotels', require('./routes/hotelRouter'));
 app.use('/api/hotel', require('./routes/hotelRouter'));
 app.use('/api/hotels', require('./routes/hotelRouter'));
 app.use('/api/stripe', require('./routes/hotelRouter'));
+app.use('/api/checkout/:id', require('./routes/checkoutRouter'));
 app.use('/api/checkout', require('./routes/checkoutRouter'));
 
 const PORT = process.env.PORT || 5000;

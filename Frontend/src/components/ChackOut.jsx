@@ -24,8 +24,8 @@ const Checkout = () => {
     checkOutDate,
     totalHotelPrice,
     hotelName,
+    images,
     hotelLocation,
-    hotelId,
   } = location.state || {};
 
   const [checkoutInformation, setCheckoutInformation] = useState({
@@ -37,6 +37,7 @@ const Checkout = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    if (showStripeForm) return;
     const { phone, address, city, country } = checkoutInformation;
 
     if (!phone) return setErrorMess('Phone is required.');
@@ -46,23 +47,26 @@ const Checkout = () => {
 
     setErrorMess('');
 
+    // Save booking info only once
     localStorage.setItem(
       'bookingInfo',
       JSON.stringify({
-        user: user._id,
-        hotel: hotelId,
+        userName: user?.fullName,
+        userEmail: user?.email,
+        hotelName,
+        hotelLocation,
+        images,
         guests,
         checkInDate,
         checkOutDate,
         totalPrice: totalHotelPrice,
         paymentStatus: 'paid',
-        phone: checkoutInformation.phone,
-        address: checkoutInformation.address,
-        city: checkoutInformation.city,
-        country: checkoutInformation.country,
+        phone,
+        address,
+        city,
+        country,
       })
     );
-    setShowStripeForm(true);
     setShowStripeForm(true);
   };
 
@@ -77,7 +81,9 @@ const Checkout = () => {
         console.error('Error creating payment intent:', error);
       }
     };
-    createPaymentIntent();
+    if (totalHotelPrice) {
+      createPaymentIntent();
+    }
   }, [axiosPublic, totalHotelPrice]);
 
   const options = {
@@ -98,8 +104,8 @@ const Checkout = () => {
               <input
                 type="text"
                 value={user?.fullName}
-                readOnly
-                className="w-full bg-gray-100 text-gray-600 border border-blue-300 px-4 py-2 rounded-md cursor-not-allowed outline-none"
+                disabled
+                className="w-full bg-gray-100 text-gray-600 border border-blue-300 px-4 py-2 rounded-md  outline-none"
               />
             </div>
             <div>
@@ -107,8 +113,8 @@ const Checkout = () => {
               <input
                 type="email"
                 value={user?.email}
-                readOnly
-                className="w-full bg-gray-100 text-gray-600 border border-blue-300 px-4 py-2 rounded-md cursor-not-allowed outline-none"
+                disabled
+                className="w-full bg-gray-100 text-gray-600 border border-blue-300 px-4 py-2 rounded-md outline-none"
               />
             </div>
           </div>
@@ -183,7 +189,10 @@ const Checkout = () => {
             <p className="text-red-500 text-sm mt-2">{errorMess}</p>
           )}
 
-          <button className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition mt-4">
+          <button
+            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition mt-4"
+            disabled={showStripeForm}
+          >
             Checkout
           </button>
         </form>
@@ -228,14 +237,10 @@ const Checkout = () => {
       {showStripeForm && (
         <div className="bg-white p-6 rounded-2xl shadow-lg border border-blue-100">
           <h3 className="text-2xl font-bold text-blue-600 mb-4">Payment</h3>
-          {clientSecret ? (
+          {clientSecret && (
             <Elements stripe={stripePromise} options={options}>
               <CheckoutForm />
             </Elements>
-          ) : (
-            <p className="text-gray-500 text-center">
-              Loading payment details...
-            </p>
           )}
         </div>
       )}

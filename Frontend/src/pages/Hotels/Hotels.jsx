@@ -30,7 +30,7 @@ const Hotels = () => {
   if (loading) return <Spinner />;
 
   return (
-    <div className="py-10 max-h-screen flex flex-col">
+    <div className="">
       <div className="container mx-auto px-4">
         {/* Header section */}
         <div className="bg-[#1A4D8C] text-white py-20 mt-16">

@@ -220,6 +220,7 @@ const HotelDetails = () => {
             hotelName={hotelData.name}
             hotelLocation={hotelData.location}
             hotelId={hotelData._id}
+            images={hotelData.images[0]}
           />
         </div>
       </div>
