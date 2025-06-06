@@ -19,6 +19,18 @@ const checkOut = async (req, res) => {
     res.status(500).json({ message: 'Booking failed', error: error.message });
   }
 };
+// all booking get
+const allBooking = async (req, res) => {
+  try {
+    const booking = await Checkout.find();
+    res.status(200).json({ booking }); // ✅ Use 200 for successful response
+  } catch (error) {
+    res.status(500).json({
+      message: 'Failed to get bookings',
+      error: error.message,
+    });
+  }
+};
 
 const getCheckout = async (req, res) => {
   try {
@@ -42,4 +54,4 @@ const getCheckout = async (req, res) => {
   }
 };
 
-module.exports = { checkOut, getCheckout };
+module.exports = { checkOut, getCheckout, allBooking };

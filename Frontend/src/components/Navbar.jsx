@@ -1,18 +1,12 @@
 import { useState, useEffect } from 'react';
-import { CiLogout, CiUser } from 'react-icons/ci';
-import { IoIosArrowDown } from 'react-icons/io';
+import { CiUser } from 'react-icons/ci';
 import { Link, NavLink } from 'react-router-dom';
 import useAuthStore from '../store/authStore';
-import useAxiosePublic from '../hooks/useAxiosPublic';
-import toast from 'react-hot-toast';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isToggleOpen, setIsToggleOpen] = useState(false);
   const user = useAuthStore(state => state.user);
-  const [isOpen, setOpen] = useState(false);
-  const axiosPublic = useAxiosePublic();
-  const setUser = useAuthStore(state => state.setUser);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,23 +24,6 @@ const Navbar = () => {
     };
   }, []);
 
-  const handleLogout = async () => {
-    setOpen(false);
-
-    try {
-      const res = await axiosPublic.post(
-        '/auth/logout',
-        {},
-        {
-          withCredentials: true,
-        }
-      );
-      setUser(null);
-      toast.success(res.data?.message);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   const fastWord = name => {
     if (!name) return '';
     const words = name.trim().split(' ');
@@ -160,58 +137,23 @@ const Navbar = () => {
             {user ? (
               <div className="flex flex-col justify-center items-center gap-1 text-sm relative">
                 {/* Avatar + Dropdown Toggle Button */}
-                <div className="inline-flex items-center divide-x divide-gray-300 rounded border border-gray-300 bg-[#1A4D8C] shadow-sm overflow-hidden">
-                  {/* Avatar with Online Badge */}
-                  <Link to="/profile" className="relative p-1.5">
-                    <div className="relative h-12 w-12 overflow-hidden rounded-full bg-slate-300 text-xl font-semibold text-white">
-                      {user.image ? (
-                        <img
-                          src={user.image}
-                          alt={user.fullName}
-                          className="h-full w-full object-cover"
-                        />
-                      ) : (
-                        <span className="flex h-full w-full items-center justify-center">
-                          {fastWord(user.fullName)}
-                        </span>
-                      )}
-                    </div>
-                    <span className="absolute top-[5px] left-2 w-3 h-3 bg-green-400 border-2 border-white rounded-full"></span>
-                  </Link>
-
-                  {/* Dropdown Toggle */}
-                  <button
-                    onClick={() => setOpen(!isOpen)}
-                    type="button"
-                    className="px-3 py-1.5 text-sm font-medium text-white   cursor-pointer"
-                  >
-                    <IoIosArrowDown className="size-4 " />
-                  </button>
-                </div>
-
-                {/* Dropdown Menu */}
-                {isOpen && (
-                  <div
-                    role="menu"
-                    className="absolute right-0 top-14 z-50 w-40 rounded border border-gray-300 bg-[#1A4D8C] shadow-md divide-y divide-gray-200 "
-                  >
-                    <Link
-                      to="deshboard"
-                      className="w-full inline-block px-4 py-2 text-left text-sm font-medium text-white hover:bg-blue-700"
-                    >
-                      Dashboard
-                    </Link>
-
-                    <button
-                      onClick={handleLogout}
-                      type="button"
-                      className="flex w-full items-center space-x-2  px-4 py-2 text-left text-sm text-red-500 hover:bg-red-100 cursor-pointer"
-                    >
-                      <span>Logout</span>
-                      <CiLogout className="text-red-500 size-5" />
-                    </button>
+                {/* Avatar with Online Badge */}
+                <Link to="/deshboard" className="relative p-1.5">
+                  <div className="relative h-12 w-12 overflow-hidden rounded-full bg-slate-300 text-xl font-semibold text-white">
+                    {user.image ? (
+                      <img
+                        src={user.image}
+                        alt={user.fullName}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <span className="flex h-full w-full items-center justify-center">
+                        {fastWord(user.fullName)}
+                      </span>
+                    )}
                   </div>
-                )}
+                  <span className="absolute top-[5px] left-2 w-3 h-3 bg-green-400 border-2 border-white rounded-full"></span>
+                </Link>
               </div>
             ) : (
               // Sign In Link

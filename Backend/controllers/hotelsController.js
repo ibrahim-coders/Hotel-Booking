@@ -9,6 +9,7 @@ const hotels = async (req, res) => {
     price,
     featured,
     images,
+    status,
     rating,
     category,
     description,
@@ -20,6 +21,7 @@ const hotels = async (req, res) => {
       !price ||
       !featured ||
       !images ||
+      !status ||
       !rating ||
       !category ||
       !description
@@ -32,6 +34,7 @@ const hotels = async (req, res) => {
       price,
       featured,
       images,
+      status,
       rating,
       category,
       description,
@@ -66,6 +69,68 @@ const getHotels = async (req, res) => {
     res.status(500).json({ message: 'Server Error' });
   }
 };
+// hotel delete
+const deleteHotels = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const hotel = await Hotels.findByIdAndDelete(id);
+    if (!hotel) {
+      return res.status(404).json({ message: 'Hotel not found' });
+    }
+
+    res.status(200).json({ message: 'Hotel deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
+//hotel update
+const updateHotel = async (req, res) => {
+  const { id } = req.params;
+  const {
+    name,
+    location,
+    price,
+    featured,
+    images,
+    status,
+    rating,
+    category,
+    description,
+  } = req.body;
+
+  try {
+    const hotel = await Hotels.findByIdAndUpdate(
+      id,
+      {
+        name,
+        location,
+        price,
+        featured,
+        images,
+        status,
+        rating,
+        category,
+        description,
+      },
+      { new: true }
+    );
+    console.log(hotel);
+    res.status(200).json({ message: 'Updated successfull', hotel });
+  } catch (error) {
+    console.error('Error fetching hotels:', error.message);
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
+// all hotels
+const allHotels = async (req, res) => {
+  try {
+    const hotels = await Hotels.find({});
+    res.status(200).json(hotels);
+  } catch (error) {
+    console.error('Error fetching hotels:', error.message);
+    res.status(500).json({ message: 'Server Error' });
+  }
+};
 
 const getFeaturedHotels = async (req, res) => {
   try {
@@ -81,6 +146,7 @@ const getFeaturedHotels = async (req, res) => {
 // Get single hotel details by ID
 const hotelsDeteails = async (req, res) => {
   const { id } = req.params;
+  console.log(id);
   try {
     const hotel = await Hotels.findById(id);
     if (!hotel) {
@@ -140,4 +206,7 @@ module.exports = {
   getFeaturedHotels,
   searchQuery,
   stripePayment,
+  allHotels,
+  deleteHotels,
+  updateHotel,
 };

@@ -3,11 +3,11 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { IoMdAdd } from 'react-icons/io';
-import uploadImage from '../../utils/uploadImage';
-import useAxiosPublic from '../../hooks/useAxiosPublic';
-import Spinner from '../../components/Spinner';
+import uploadImage from '../../../utils/uploadImage';
+import useAxiosPublic from '../../../hooks/useAxiosPublic';
+import Spinner from '../../../components/Spinner';
 import { toast } from 'react-hot-toast';
-import HotelImageSelect from '../../components/HotelImageSeleact';
+import HotelImageSelect from '../../../components/HotelImageSeleact';
 import { IoMdClose } from 'react-icons/io';
 
 const schema = z.object({

@@ -15,43 +15,25 @@ import { CiSaveDown1 } from 'react-icons/ci';
 import useAuthStore from '../../../store/authStore';
 import Footer from '../../../components/Footer';
 import { useQuery } from '@tanstack/react-query';
-import useAxiosCustomer from '../../../hooks/useCustomer';
+import useAxiosSequrity from '../../../hooks/useCustomer';
 import Spinner from '../../../components/Spinner';
 import { Link } from 'react-router-dom';
 
 const DashboardCustomer = () => {
   const [activeTab, setActiveTab] = useState('bookings');
   const user = useAuthStore(state => state.user);
-  const axiosCustomer = useAxiosCustomer();
+  const axiosSequrity = useAxiosSequrity();
   const logout = useAuthStore(state => state.logout);
-  const fastWord = name => {
-    if (!name) return '';
-    const words = name.trim().split(' ');
-    let initials = '';
-    for (let i = 0; i < Math.min(words.length, 2); i++) {
-      initials += words[i][0];
-    }
-    return initials.toUpperCase();
-  };
 
-  const { isLoading, data: checkOutDate } = useQuery({
+  const { data: checkOutDate } = useQuery({
     queryKey: ['checkout', user],
     queryFn: async () => {
-      const res = await axiosCustomer.get('/checkout', {
+      const res = await axiosSequrity.get('/checkout', {
         params: { userEmail: user?.email },
       });
       return res.data;
     },
   });
-
-  if (isLoading) return <Spinner />;
-
-  // if (error)
-  //   return (
-  //     <div className="text-red-600 flex flex-justify-center items-center text-center h-screen">
-  //       {error.message}
-  //     </div>
-  //   );
 
   const handleDownloadPDF = booking => {
     const element = document.createElement('div');
@@ -147,21 +129,6 @@ const DashboardCustomer = () => {
       <section className="bg-[#0F6299] text-white py-12">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
-            <div className="relative h-20 w-20 overflow-hidden rounded-full bg-slate-300 text-xl font-semibold text-white">
-              {user.image ? (
-                <img
-                  src={user.image}
-                  alt={user.fullName}
-                  className="h-full w-full object-cover"
-                />
-              ) : (
-                <span className="flex h-full w-full items-center justify-center">
-                  {fastWord(user.fullName)}
-                </span>
-              )}
-              <span className="absolute top-[5px] left-2.5 w-3 h-3 bg-green-400 border-2 border-white rounded-full"></span>
-            </div>
-
             <div className="flex-1">
               <h1 className="text-3xl font-bold mb-2">
                 Welcome back, {user?.fullName}!

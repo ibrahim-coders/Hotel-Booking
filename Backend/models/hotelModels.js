@@ -21,6 +21,9 @@ const hotleSchema = new mongoose.Schema({
     type: [String],
     required: true,
   },
+  status: {
+    type: String,
+  },
   rating: {
     type: Number,
     required: true,

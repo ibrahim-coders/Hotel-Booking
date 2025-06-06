@@ -2,7 +2,7 @@ import { FaEdit, FaUser } from 'react-icons/fa';
 import { MdLock, MdOutlineMailOutline } from 'react-icons/md';
 import useAuthStore from '../../../store/authStore';
 import { useState } from 'react';
-import useAxiosCustomer from '../../../hooks/useCustomer';
+import useAxiosSequrity from '../../../hooks/useCustomer';
 import { useMutation } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 
@@ -16,11 +16,11 @@ const Profile = () => {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const axiosCustomer = useAxiosCustomer();
+  const axiosSequrity = useAxiosSequrity();
 
   const updateUserMutation = useMutation({
     mutationFn: async ({ fullName, email }) => {
-      const res = await axiosCustomer.patch('/user/updateUser', {
+      const res = await axiosSequrity.patch('/user/updateUser', {
         fullName,
         email,
       });
@@ -47,7 +47,7 @@ const Profile = () => {
 
   const changePasswordMutation = useMutation({
     mutationFn: async ({ currentPassword, newPassword }) => {
-      const res = await axiosCustomer.patch('/auth/change-password', {
+      const res = await axiosSequrity.patch('/auth/change-password', {
         currentPassword,
         newPassword,
       });

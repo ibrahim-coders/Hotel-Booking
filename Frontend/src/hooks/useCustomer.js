@@ -3,17 +3,17 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuthStore from '../store/authStore';
 
-const axiosCustomer = axios.create({
+const axiosSequrity = axios.create({
   baseURL: `${import.meta.env.VITE_BASEURL}`,
   withCredentials: true,
 });
 
-const useAxiosCustomer = () => {
+const useAxiosSequrity = () => {
   const navigate = useNavigate();
   const logout = useAuthStore(state => state.logout);
 
   useEffect(() => {
-    axiosCustomer.interceptors.response.use(
+    axiosSequrity.interceptors.response.use(
       response => response,
       async error => {
         console.log(' interceptor -->', error.response);
@@ -28,7 +28,7 @@ const useAxiosCustomer = () => {
     );
   }, [logout, navigate]);
 
-  return axiosCustomer;
+  return axiosSequrity;
 };
 
-export default useAxiosCustomer;
+export default useAxiosSequrity;

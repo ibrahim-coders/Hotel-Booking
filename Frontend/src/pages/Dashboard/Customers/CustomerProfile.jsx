@@ -6,7 +6,7 @@ import Profile from './Profile';
 import { useRef, useState } from 'react';
 import uploadImage from '../../../utils/uploadImage';
 import toast from 'react-hot-toast';
-import useAxiosCustomer from '../../../hooks/useCustomer';
+import useAxiosSequrity from '../../../hooks/useCustomer';
 
 const CustomerProfile = () => {
   const user = useAuthStore(state => state.user);
@@ -15,7 +15,7 @@ const CustomerProfile = () => {
   const [previewImage, setPreviewImage] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploading, setUploading] = useState(false);
-  const axiosCustomer = useAxiosCustomer();
+  const axiosSequrity = useAxiosSequrity();
 
   const fastWord = name => {
     if (!name) return '';
@@ -50,7 +50,7 @@ const CustomerProfile = () => {
     }
 
     try {
-      const res = await axiosCustomer.patch('/user/updateImage', {
+      const res = await axiosSequrity.patch('/updateImage', {
         image: imageUrl,
       });
       setUser(res.data.user);

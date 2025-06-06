@@ -84,7 +84,7 @@ const Login = () => {
               id="email"
               type="email"
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-              placeholder="email@example.com"
+              placeholder="email@gmail.com"
               value={email}
               onChange={e => setEmail(e.target.value)}
               required
@@ -122,9 +122,9 @@ const Login = () => {
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (
-                  <AiOutlineEyeInvisible size={20} />
-                ) : (
                   <AiOutlineEye size={20} />
+                ) : (
+                  <AiOutlineEyeInvisible size={20} />
                 )}
               </button>
             </div>
