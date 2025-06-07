@@ -23,7 +23,7 @@ const checkOut = async (req, res) => {
 const allBooking = async (req, res) => {
   try {
     const booking = await Checkout.find();
-    res.status(200).json({ booking }); // ✅ Use 200 for successful response
+    res.status(200).json({ booking });
   } catch (error) {
     res.status(500).json({
       message: 'Failed to get bookings',

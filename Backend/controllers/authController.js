@@ -144,7 +144,7 @@ exports.upDateUserImage = async (req, res) => {
   try {
     const userId = req.user.id;
     const { image } = req.body;
-    console.log(image, userId);
+
     if (!image) return res.status(400).json({ message: 'No image provided' });
 
     const updatedUser = await User.findByIdAndUpdate(
