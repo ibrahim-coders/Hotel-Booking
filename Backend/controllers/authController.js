@@ -117,7 +117,7 @@ exports.upDateUser = async (req, res) => {
 
 exports.changePassword = async (req, res) => {
   const { currentPassword, newPassword } = req.body;
-  console.log(currentPassword, newPassword);
+
   try {
     const userId = req.user.id;
     const user = await User.findById(userId);

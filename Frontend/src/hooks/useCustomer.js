@@ -16,8 +16,6 @@ const useAxiosSequrity = () => {
     axiosSequrity.interceptors.response.use(
       response => response,
       async error => {
-        console.log(' interceptor -->', error.response);
-
         if (error.response?.status === 401 || error.response?.status === 403) {
           logout();
           navigate('/login');

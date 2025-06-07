@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { CiUser } from 'react-icons/ci';
 import { Link, NavLink } from 'react-router-dom';
 import useAuthStore from '../store/authStore';
-
+import logo from '../assets/star-hotel.png';
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isToggleOpen, setIsToggleOpen] = useState(false);
@@ -47,14 +47,15 @@ const Navbar = () => {
           {/* Brand logo */}
           <Link
             to="/"
-            className="flex items-center gap-2 whitespace-nowrap text-lg focus:outline-none lg:flex-1"
+            className="flex items-center whitespace-nowrap text-lg focus:outline-none lg:flex-1"
           >
+            <img src={logo} alt="logo" className="w-10 h-10" />
             <span
-              className={`text-2xl font-heading font-bold ${
-                isScrolled ? 'text-[#1A4D8C]' : 'text-teal-500'
+              className={`text-2xl font-heading font-bold italic ${
+                isScrolled ? 'text-[#1A4D8C]' : 'text-white'
               }`}
             >
-              StartHotel
+              Hotel
             </span>
           </Link>
 
@@ -87,8 +88,8 @@ const Navbar = () => {
                 to="/"
                 className={({ isActive }) =>
                   `transition-colors hover:text-hotel-teal ${
-                    isScrolled ? 'text-teal-500' : 'text-teal-500'
-                  } ${isActive ? 'font-bold underline text-teal-500' : ''}`
+                    isScrolled ? 'text-gray-950' : 'text-white'
+                  } ${isActive ? 'font-bold underline text-gray-950' : ''}`
                 }
               >
                 Home
@@ -99,8 +100,8 @@ const Navbar = () => {
                 to="/hotels"
                 className={({ isActive }) =>
                   `transition-colors hover:text-hotel-teal ${
-                    isScrolled ? 'text-teal-500' : 'text-teal-500'
-                  } ${isActive ? 'font-bold underline text-teal-500' : ''}`
+                    isScrolled ? 'text-gray-950' : 'text-white'
+                  } ${isActive ? 'font-bold underline text-gray-950' : ''}`
                 }
               >
                 Hotels
@@ -111,8 +112,8 @@ const Navbar = () => {
                 to="/about"
                 className={({ isActive }) =>
                   `transition-colors hover:text-hotel-teal ${
-                    isScrolled ? 'text-teal-500' : 'text-teal-500'
-                  } ${isActive ? 'font-bold underline text-teal-500' : ''}`
+                    isScrolled ? 'text-gray-950' : 'text-white'
+                  } ${isActive ? 'font-bold underline text-gray-950' : ''}`
                 }
               >
                 About Us
@@ -123,8 +124,8 @@ const Navbar = () => {
                 to="/contact"
                 className={({ isActive }) =>
                   `transition-colors hover:text-hotel-teal ${
-                    isScrolled ? 'text-teal-500' : 'text-teal-500'
-                  } ${isActive ? 'font-bold underline text-teal-500' : ''}`
+                    isScrolled ? 'text-gray-950' : 'text-white'
+                  } ${isActive ? 'font-bold underline text-gray-950' : ''}`
                 }
               >
                 Contact
@@ -133,7 +134,7 @@ const Navbar = () => {
           </ul>
 
           {/* Sign In Button or User Avatar with Dropdown */}
-          <div className="ml-auto flex items-center justify-end px-6 lg:ml-0 lg:flex-1 lg:p-0">
+          <div className="ml-auto flex items-center justify-end px-4 lg:ml-0 lg:flex-1 lg:p-0">
             {user ? (
               <div className="flex flex-col justify-center items-center gap-1 text-sm relative">
                 {/* Avatar + Dropdown Toggle Button */}

@@ -1,8 +1,4 @@
-import { NavLink } from 'react-router-dom';
 import useAuthStore from '../../../store/authStore';
-import { FaRegUser } from 'react-icons/fa';
-import { MdSpaceDashboard } from 'react-icons/md';
-import Profile from './Profile';
 import { useRef, useState } from 'react';
 import uploadImage from '../../../utils/uploadImage';
 import toast from 'react-hot-toast';
@@ -42,7 +38,7 @@ const CustomerProfile = () => {
   const handleImageUpload = async () => {
     if (!selectedFile) return;
     setUploading(true);
-    const imageUrl = await uploadImage(selectedFile); // Cloudinary upload
+    const imageUrl = await uploadImage(selectedFile);
     if (!imageUrl) {
       toast.error('Image upload failed!');
       setUploading(false);
@@ -66,93 +62,53 @@ const CustomerProfile = () => {
   return (
     <div className="max-w-7xl mx-auto px-2 sm:px-4 flex flex-col md:flex-row gap-4">
       {/* Sidebar */}
-      <div className="w-full sm:w-72 shadow rounded py-4">
-        <div className="px-4 flex flex-col items-center gap-4 py-6">
-          {/* Profile Image */}
-          <div
-            className="relative h-20 w-20 overflow-hidden rounded-full bg-slate-300 text-xl font-semibold text-white cursor-pointer"
-            onClick={handleImageClick}
-          >
-            {previewImage ? (
-              <img
-                src={previewImage}
-                alt="Preview"
-                className="h-full w-full object-cover"
-              />
-            ) : user.image ? (
-              <img
-                src={user.image}
-                alt={user.fullName}
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <span className="flex h-full w-full items-center justify-center">
-                {fastWord(user.fullName)}
-              </span>
-            )}
-            <span className="absolute top-[5px] left-2.5 w-3 h-3 bg-green-400 border-2 border-white rounded-full"></span>
-            <input
-              type="file"
-              accept="image/*"
-              ref={inputRef}
-              onChange={handleFileChange}
-              style={{ display: 'none' }}
+
+      <div className="px-4 flex flex-col items-center gap-4 py-6">
+        {/* Profile Image */}
+        <div
+          className="relative h-20 w-20 overflow-hidden rounded-full bg-slate-300 text-xl font-semibold text-white cursor-pointer"
+          onClick={handleImageClick}
+        >
+          {previewImage ? (
+            <img
+              src={previewImage}
+              alt="Preview"
+              className="h-full w-full object-cover"
             />
-          </div>
-
-          {/* Upload Button */}
-          {selectedFile && (
-            <button
-              onClick={handleImageUpload}
-              disabled={uploading}
-              className="px-3 py-1 text-sm bg-blue-600 hover:bg-blue-700 transition-colors text-white rounded"
-            >
-              {uploading ? 'Uploading...' : 'Upload'}
-            </button>
+          ) : user.image ? (
+            <img
+              src={user.image}
+              alt={user.fullName}
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            <span className="flex h-full w-full items-center justify-center">
+              {fastWord(user.fullName)}
+            </span>
           )}
-
-          {/* Username */}
-          <h1 className="text-xl font-bold">{user?.fullName}</h1>
+          <span className="absolute top-[5px] left-2.5 w-3 h-3 bg-green-400 border-2 border-white rounded-full"></span>
+          <input
+            type="file"
+            accept="image/*"
+            ref={inputRef}
+            onChange={handleFileChange}
+            style={{ display: 'none' }}
+          />
         </div>
 
-        {/* Navigation Links */}
-        <ul className="flex flex-col gap-4 px-3">
-          <li>
-            <NavLink
-              to=""
-              className={({ isActive }) =>
-                `flex items-center gap-2 text-gray-600 py-2 px-3 rounded text-sm transition-colors shadow 
-                ${
-                  isActive
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-blue-100 hover:bg-blue-600 hover:text-white'
-                }`
-              }
-            >
-              <FaRegUser className="size-4" /> My Profile
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/deshboard"
-              className={({ isActive }) =>
-                `flex items-center gap-2 text-gray-600 py-2 px-3 rounded text-sm transition-colors shadow 
-                ${
-                  isActive
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-blue-100 hover:bg-blue-600 hover:text-white'
-                }`
-              }
-            >
-              <MdSpaceDashboard className="size-4" /> Dashboard
-            </NavLink>
-          </li>
-        </ul>
-      </div>
+        {/* Upload Button */}
+        {selectedFile && (
+          <button
+            onClick={handleImageUpload}
+            disabled={uploading}
+            className="px-3 py-1 text-sm bg-blue-600 hover:bg-blue-700 transition-colors text-white rounded"
+          >
+            {uploading ? 'Uploading...' : 'Upload'}
+          </button>
+        )}
 
-      {/* Profile Section */}
-      <div className="flex-1 w-full">
-        <Profile />
+        {/* Username */}
+        <h1 className="text-xl font-bold">{user?.fullName}</h1>
       </div>
     </div>
   );

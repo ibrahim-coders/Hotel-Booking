@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { CiFacebook, CiInstagram, CiTwitter, CiYoutube } from 'react-icons/ci';
-
+import logo from '../assets/star-hotel.png';
 const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white">
@@ -9,8 +9,12 @@ const Footer = () => {
         <div className="py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
-            <h3 className="font-bold text-2xl mb-4">StartHotel</h3>
-            <p className="text-gray-400 mb-6">
+            <div className="flex gap-2 items-center mb-4">
+              <img src={logo} alt="logo" className="h-10 w-10" />
+              <h3 className="font-bold text-2xl">Hotel</h3>
+            </div>
+
+            <p className="text-gray-400 ">
               Find and book your perfect accommodation worldwide. We offer the
               best prices and a seamless booking experience.
             </p>

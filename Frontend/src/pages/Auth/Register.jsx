@@ -45,8 +45,17 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sky-50 to-white flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md bg-white shadow-md rounded-xl p-6">
+    <div className="min-h-screen relative flex items-center justify-center px-4 py-12">
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage:
+            'url(https://img.freepik.com/free-photo/popular-resort-amara-dolce-vita-luxury-hotel-with-pools-water-parks-recreational-area-along-sea-coast-turkey-sunset-tekirova-kemer_146671-18759.jpg?uid=R195459256&ga=GA1.1.687474419.1743077461&semt=ais_hybrid&w=740)',
+        }}
+      >
+        <div className="absolute inset-0 bg-black/50"></div>
+      </div>
+      <div className="w-full max-w-md bg-gradient-to-b from-sky-50 to-white flex flex-col p-6 sm:p-8 rounded-xl shadow-md relative z-10">
         <div className="text-center mb-6">
           <Link to="/">
             <h1 className="text-3xl font-bold text-blue-500">StartHotel</h1>
@@ -102,7 +111,7 @@ const Register = () => {
               id="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
-              placeholder="your.email@example.com"
+              placeholder="email..."
               className="mt-1 w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200"
               required
             />

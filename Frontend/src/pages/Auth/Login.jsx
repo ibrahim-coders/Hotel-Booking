@@ -51,15 +51,23 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sky-50 to-white flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md bg-white p-6 rounded-xl shadow-md">
+    <div className="min-h-screen relative flex items-center justify-center px-4 py-12">
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage:
+            'url(https://img.freepik.com/premium-photo/regent-hotel-tivat-montenegro-porto-montenegro_278455-3755.jpg?uid=R195459256&ga=GA1.1.687474419.1743077461&semt=ais_hybrid&w=740)',
+        }}
+      >
+        <div className="absolute inset-0 bg-black/50"></div>
+      </div>
+      <div className="w-full max-w-md bg-gradient-to-b from-sky-50 to-white flex flex-col p-6 sm:p-8 rounded-xl shadow-md relative z-10">
         <div className="text-center mb-6">
           <Link to="/" className="inline-block">
             <h1 className="text-3xl font-bold text-blue-500">StartHotel</h1>
           </Link>
           <p className="text-gray-600 mt-1">Sign in to your account</p>
         </div>
-
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold">Welcome back</h2>
           <Link
@@ -72,7 +80,6 @@ const Login = () => {
         <p className="text-sm text-gray-500 mb-6">
           Enter your credentials to access your account
         </p>
-
         <form onSubmit={handleLogin} className="space-y-5">
           {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
@@ -138,7 +145,6 @@ const Login = () => {
             <span>Sign In</span>
           </button>
         </form>
-
         <p className="mt-6 text-center text-sm text-gray-500">
           Don't have an account?{' '}
           <Link

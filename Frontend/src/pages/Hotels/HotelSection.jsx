@@ -6,7 +6,7 @@ const HotelSection = ({ search, setFeaturedHotels }) => {
   const [searchTerm, setSearch] = useState(search);
   const [category, setCategory] = useState('');
   const [sort, setSort] = useState('');
-  console.log(category, sort);
+
   const handleSearch = async () => {
     let query = [];
     if (searchTerm) query.push(`location=${searchTerm}`);
@@ -31,7 +31,7 @@ const HotelSection = ({ search, setFeaturedHotels }) => {
   };
   return (
     <section className="pt-8 bg-white ">
-      <div className="container mx-auto px-4">
+      <div className="max-w-4xl mx-auto px-4">
         <div className="flex flex-col md:flex-row gap-4 items-center">
           {/* Search Input */}
           <div className="relative flex-1 max-w-sm w-full">

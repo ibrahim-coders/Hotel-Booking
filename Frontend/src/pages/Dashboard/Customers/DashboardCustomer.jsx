@@ -16,9 +16,9 @@ import useAuthStore from '../../../store/authStore';
 import Footer from '../../../components/Footer';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSequrity from '../../../hooks/useCustomer';
-import Spinner from '../../../components/Spinner';
 import { Link } from 'react-router-dom';
-
+import logo from '../../../assets/star-hotel.png';
+import Profile from './Profile';
 const DashboardCustomer = () => {
   const [activeTab, setActiveTab] = useState('bookings');
   const user = useAuthStore(state => state.user);
@@ -118,8 +118,8 @@ const DashboardCustomer = () => {
       {/* Navbar */}
       <nav className="bg-[#0F6299] text-white px-4 py-3 flex items-center justify-between shadow">
         <Link to="/">
-          <div className="flex items-center gap-2">
-            <FaCalendarAlt className="text-2xl" />
+          <div className="flex items-center">
+            <img src={logo} alt="logo" className="w-10 h-10" />
             <span className="font-bold text-lg">Hotel Dashboard</span>
           </div>
         </Link>
@@ -155,9 +155,9 @@ const DashboardCustomer = () => {
         <div className="container mx-auto px-4">
           <div className="flex gap-4 mb-8">
             <button
-              className={`px-4 py-2 rounded-t-lg font-semibold transition ${
+              className={`px-4 py-2 rounded-t-lg font-semibold transition  cursor-pointer${
                 activeTab === 'bookings'
-                  ? ' bg-blue-100 text-blue-700 shadow cursor-pointer'
+                  ? ' bg-blue-100 text-blue-700 shadow '
                   : 'bg-white text-blue-700 shadow'
               }`}
               onClick={() => setActiveTab('bookings')}
@@ -166,9 +166,19 @@ const DashboardCustomer = () => {
             </button>
 
             <button
-              className={`px-4 py-2 rounded-t-lg font-semibold transition ${
+              className={`px-4 py-2 rounded-t-lg font-semibold transition   cursor-pointer${
+                activeTab === 'profile'
+                  ? ' bg-blue-100 text-blue-700 shadow'
+                  : 'bg-white text-blue-700 shadow'
+              }`}
+              onClick={() => setActiveTab('profile')}
+            >
+              My Profile
+            </button>
+            <button
+              className={`px-4 py-2 rounded-t-lg font-semibold transition  cursor-pointer ${
                 activeTab === 'settings'
-                  ? ' bg-blue-100 text-blue-700 shadow cursor-pointer'
+                  ? ' bg-blue-100 text-blue-700 shadow '
                   : 'bg-white text-blue-700 shadow'
               }`}
               onClick={() => setActiveTab('settings')}
@@ -245,6 +255,9 @@ const DashboardCustomer = () => {
               </div>
             </div>
           )}
+
+          {/* profile tab */}
+          {activeTab === 'profile' && <Profile />}
 
           {/* Settings Tab */}
           {activeTab === 'settings' && (

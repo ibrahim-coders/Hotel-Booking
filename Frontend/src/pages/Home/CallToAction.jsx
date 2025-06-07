@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const CallToAction = () => {
   return (
     <section className="py-20 bg-[#1A4D8C] text-white">
@@ -12,12 +14,18 @@ const CallToAction = () => {
             deals on premium hotels worldwide.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <button className=" bg-white  text-gray-700 text-sm font-semibold px-6 py-2 rounded-md whitespace-nowrap cursor-pointer">
+            <Link
+              to="/login"
+              className=" bg-white  text-gray-700 text-sm font-semibold px-6 py-2 rounded-md whitespace-nowrap cursor-pointer"
+            >
               Sign Up Now
-            </button>
-            <button className=" bg-white  text-gray-700 text-sm font-semibold px-6 py-2 rounded-md whitespace-nowrap cursor-pointer">
+            </Link>
+            <Link
+              to="/hotels"
+              className=" bg-white  text-gray-700 text-sm font-semibold px-6 py-2 rounded-md whitespace-nowrap cursor-pointer"
+            >
               Browse Hotels
-            </button>
+            </Link>
           </div>
         </div>
       </div>

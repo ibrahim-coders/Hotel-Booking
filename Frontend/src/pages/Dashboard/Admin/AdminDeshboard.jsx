@@ -13,6 +13,7 @@ import Booking from './Booking';
 import Users from './Users';
 import Analytics from './Analytics';
 import Setting from './Setting';
+import AdminProfile from './AdminProfile';
 
 const AdminDeshboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -125,6 +126,16 @@ const AdminDeshboard = () => {
             >
               Analytics
             </button>
+            <button
+              className={`flex-1 min-w-[120px] px-4 py-2 rounded font-semibold transition cursor-pointer ${
+                activeTab === 'profile'
+                  ? 'bg-blue-100 text-blue-700 shadow cursor-pointer'
+                  : 'bg-white text-blue-700 shadow'
+              }`}
+              onClick={() => setActiveTab('profile')}
+            >
+              Profile
+            </button>
 
             {/* Settings */}
             <button
@@ -155,6 +166,8 @@ const AdminDeshboard = () => {
           {activeTab === 'user' && <Users />}
           {/* analytics Tab */}
           {activeTab === 'analytics' && <Analytics />}
+          {/* profile */}
+          {activeTab === 'profile' && <AdminProfile />}
           {/* settings Tab */}
           {activeTab === 'settings' && <Setting />}
         </div>

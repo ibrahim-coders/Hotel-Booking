@@ -24,8 +24,8 @@ const PaymentSuccess = () => {
       });
   }, [paymentId, axiosPublic]);
   return (
-    <div className="text-center py-20">
-      <h2 className="text-2xl font-bold text-green-600 mb-4">
+    <div className="text-center py-20 bg-blue-700">
+      <h2 className="text-2xl font-bold text-white mb-4">
         Payment Successful!
       </h2>
       <p>Your booking has been saved.</p>

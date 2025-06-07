@@ -26,7 +26,7 @@ const Contact = () => {
 
       {/* Contact Information & Form */}
       <section className="py-16">
-        <div className="max-w-7xl mx-auto  px-4">
+        <div className="max-w-5xl mx-auto  px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Information */}
             <div>
@@ -128,7 +128,7 @@ const Contact = () => {
             </div>
 
             {/* Contact Form */}
-            <div>
+            <div className="space-y-6 shadow rounded bg-white p-3">
               <div className="p-6">
                 <h2 className="text-2xl font-bold mb-6 text-hotel-dark">
                   Send Us a Message
@@ -144,8 +144,7 @@ const Contact = () => {
                         First Name
                       </label>
                       <input
-                        type="text"
-                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base  file:text-foreground placeholder:text-muted-foreground focus-visible:ring-2   disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                        className="w-full p-2 border-2 rounded focus:outline-none focus:border-blue-500 border-blue-500 text-xs"
                         placeholder="John"
                         required
                       />
@@ -157,7 +156,7 @@ const Contact = () => {
                       </label>
                       <input
                         type="text"
-                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base  file:text-foreground placeholder:text-muted-foreground focus-visible:ring-2   disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                        className="w-full p-2 border-2 rounded focus:outline-none focus:border-blue-500 border-blue-500 text-xs"
                         placeholder="Doe"
                         required
                       />
@@ -169,7 +168,7 @@ const Contact = () => {
                       Email Address
                     </label>
                     <input
-                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base  file:text-foreground placeholder:text-muted-foreground focus-visible:ring-2   disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                      className="w-full p-2 border-2 rounded focus:outline-none focus:border-blue-500 border-blue-500 text-xs"
                       type="email"
                       placeholder="john.doe@example.com"
                       required
@@ -183,7 +182,7 @@ const Contact = () => {
                     <input
                       placeholder="How can we help you?"
                       type="text"
-                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base  file:text-foreground placeholder:text-muted-foreground focus-visible:ring-2   disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                      className="w-full p-2 border-2 rounded focus:outline-none focus:border-blue-500 border-blue-500 text-xs"
                       required
                     />
                   </div>
@@ -194,7 +193,7 @@ const Contact = () => {
                     </label>
                     <textarea
                       placeholder="Type your message here..."
-                      className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                      className="w-full p-2 border-2 rounded focus:outline-none focus:border-blue-500 border-blue-500 text-xs"
                       rows={5}
                       required
                     />

@@ -20,7 +20,7 @@ const DetailsSidebar = ({
   const navigate = useNavigate();
   const user = useAuthStore(state => state.user);
   const location = useLocation();
-  console.log(location);
+
   const chackOut = () => {
     if (!user) {
       return navigate('/login', { state: { from: location } });

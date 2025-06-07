@@ -5,6 +5,7 @@ import { useState } from 'react';
 import useAxiosSequrity from '../../../hooks/useCustomer';
 import { useMutation } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
+import CustomerProfile from './CustomerProfile';
 
 const Profile = () => {
   const user = useAuthStore(state => state.user);
@@ -74,6 +75,7 @@ const Profile = () => {
   };
   return (
     <div className="w-full rounded shadow mx-2 pt-10 overflow-y-auto">
+      <CustomerProfile />
       <div className="flex justify-between text-center p-4 shadow">
         <div className="text-start">
           <h2 className="text-xl font-semibold">My Profile</h2>

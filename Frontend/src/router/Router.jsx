@@ -16,6 +16,7 @@ import useAuthStore from '../store/authStore.js';
 import AdminDeshboard from '../pages/Dashboard/Admin/AdminDeshboard.jsx';
 import AdminProfile from '../pages/Dashboard/Admin/AdminProfile.jsx';
 import CustomerProfile from '../pages/Dashboard/Customers/CustomerProfile.jsx';
+import ScrollToTop from '../components/ScrollToTop .jsx';
 
 const RoleBasedDashboard = () => {
   const user = useAuthStore(state => state.user);
@@ -35,6 +36,7 @@ const RoleBasedProfile = () => {
 const Router = () => {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route element={<MainLayout />}>
           <Route index element={<Home />} />

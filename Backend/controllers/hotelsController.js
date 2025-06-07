@@ -21,7 +21,6 @@ const hotels = async (req, res) => {
       !price ||
       !featured ||
       !images ||
-      !status ||
       !rating ||
       !category ||
       !description
@@ -34,7 +33,6 @@ const hotels = async (req, res) => {
       price,
       featured,
       images,
-      status,
       rating,
       category,
       description,
@@ -146,7 +144,7 @@ const getFeaturedHotels = async (req, res) => {
 // Get single hotel details by ID
 const hotelsDeteails = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
+
   try {
     const hotel = await Hotels.findById(id);
     if (!hotel) {
